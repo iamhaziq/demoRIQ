@@ -1,0 +1,16 @@
+{
+  "_note": "Figures below are copied from the video script, not computed by the M5 pipeline. Confirm each one and its source before publishing.",
+  "msme": [
+    { "to": 1101725, "decimals": 0, "suffix": "", "label": "MSMEs in Malaysia" },
+    { "to": 96.9, "decimals": 1, "suffix": "%", "label": "of all businesses" },
+    { "to": 39.5, "decimals": 1, "suffix": "%", "label": "of GDP" }
+  ],
+  "workingCapital": { "value": "51%", "text": "of MSMEs: working capital is our main funding need." },
+  "sejahtera": ["Less israf.", "Less riba.", "More sejahtera."],
+  "pricing": [
+    { "price": "Free", "period": "", "note": "For the smallest shops" },
+    { "price": "RM99", "period": "per month", "note": "For growing retailers" },
+    { "price": "RM299", "period": "per month", "note": "" }
+  ],
+  "market": { "value": "475,000", "label": "retail businesses in Malaysia" }
+}
