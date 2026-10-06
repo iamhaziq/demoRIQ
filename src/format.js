@@ -1,14 +1,14 @@
-import data from './data/demo-data.json'
+// Formatting only. The UI never calculates a number; every value comes from Supabase.
+const CUR = 'RM'
+const missing = (n) => n === null || n === undefined || Number.isNaN(Number(n))
 
-const cur = data.meta.currency
-
-// Formatting only. The UI never calculates a number; every value comes from demo-data.json.
+/** RM1,234.56; a missing value shows as "–", never as 0. */
 export const money = (n) =>
-  `${cur}${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
+  missing(n) ? '–' : `${CUR}${Number(n).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
 
-export const money0 = (n) => `${cur}${Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 })}`
+export const money0 = (n) => (missing(n) ? '–' : `${CUR}${Number(n).toLocaleString('en-US', { maximumFractionDigits: 0 })}`)
 
-export const num = (n) => Number(n).toLocaleString('en-US', { maximumFractionDigits: 1 })
+export const num = (n) => (missing(n) ? '–' : Number(n).toLocaleString('en-US', { maximumFractionDigits: 1 }))
 
 export const showValue = (v) => (typeof v === 'number' ? num(v) : v)
 

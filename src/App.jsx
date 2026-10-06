@@ -52,7 +52,7 @@ export default function App({ shop, onSignOut }) {
       <Rail view={view} onView={setView} />
       <TopBar shop={shop} onSignOut={onSignOut} />
       <main className="main">
-        {view === 'today' && <Today cardProps={cardProps} />}
+        {view === 'today' && <Today shop={shop} />}
         {view === 'forecast' && <Forecast sku={forecastSku} onSku={setForecastSku} />}
         {view === 'cost' && (
           <StockCost
