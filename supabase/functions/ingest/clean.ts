@@ -313,7 +313,4 @@ export function cleanStock(rows: Row[], map: ColumnMap, today: string, firstRow 
   return { products: products.list(), sales: [], stock: [...snaps.values()], rejected, rowsOk }
 }
 
-/** Today's date in Malaysia (UTC+8) as ISO. */
-export function todayMYT(now = new Date()): string {
-  return new Date(now.getTime() + 8 * 3_600_000).toISOString().slice(0, 10)
-}
+export { todayMYT } from '../_shared/dates.ts'
