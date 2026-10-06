@@ -14,6 +14,7 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - Money in RM, 2 decimals. Every table has shop_id; every query filters by it.
 - Every model/rule function has a pytest test with a hand-checked example.
 - ml/retailiq_ml/decisions/ is pure Python: no Modal or database imports.
+- supabase/functions/_shared/columns.ts is pure TS shared with the frontend (Vite imports it); no Deno APIs there.
 - Never commit secrets: frontend uses .env.local (VITE_ vars, anon key only); supabase/functions/.env and Modal secrets stay out of git.
 
 ## Commands
@@ -21,4 +22,9 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - Supabase local (needs Docker): npx supabase start | npx supabase db push | npx supabase functions serve
 - ML env: cd ml && py -3.12 -m venv .venv && .venv/Scripts/pip install -e ".[dev]"
 - Modal: cd ml && modal run app.py::train_shop --shop-id <id> | modal deploy app.py
-- Tests: cd ml && .venv/Scripts/pytest
+- Tests (ML): cd ml && .venv/Scripts/pytest
+- Tests (DB, pgTAP): npx supabase test db
+- Tests (Edge Function units): cd supabase/functions && deno test --allow-read --allow-import
+- Tests (ingest end-to-end, local stack + functions serve running): deno run -A supabase/tests/ingest_e2e.ts
+- Upload templates: deno run -A scripts/make_templates.ts (writes public/templates/)
+- Specs per phase: docs/schema.md, docs/ingest.md

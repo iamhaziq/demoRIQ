@@ -71,6 +71,8 @@ select throws_ok($$select * from public.products$$, '42501', null, 'anon has no 
 reset role;
 
 -- Modal's role reads across shops and cannot touch input data.
+grant ml_worker to postgres with set true; -- test-only, rolled back
+grant usage on schema extensions to ml_worker; -- so pgTAP's functions resolve
 set local role ml_worker;
 select is((select count(*)::int from public.sales), 1, 'ml_worker can read sales');
 select throws_ok($$delete from public.sales$$, '42501', null, 'ml_worker cannot write sales');
