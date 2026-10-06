@@ -95,7 +95,14 @@ Deno.serve(async (req) => {
       processed_at: new Date().toISOString(),
     })
 
-    // Phase 7: hand off to trigger-ml here so a new shop gets forecasts within minutes.
+    // Hand off to trigger-ml so new data gets forecasts within minutes. Runs after the response;
+    // a failure here only delays forecasts until the nightly run.
+    const handoff = fetch(`${Deno.env.get('SUPABASE_URL')}/functions/v1/trigger-ml`, {
+      method: 'POST',
+      headers: { Authorization: authorization, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'predict' }),
+    }).then((r) => r.body?.cancel()).catch((e) => console.error('trigger-ml hand-off failed', e))
+    ;(globalThis as { EdgeRuntime?: { waitUntil(p: Promise<unknown>): void } }).EdgeRuntime?.waitUntil(handoff)
 
     return json(200, {
       upload_id,

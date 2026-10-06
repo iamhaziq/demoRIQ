@@ -65,3 +65,18 @@ def to_weekly(daily: pd.DataFrame, start: pd.Timestamp) -> pd.DataFrame:
         p10, p50, p90 = sum_quantiles(g["p10"], g["p50"], g["p90"])
         rows.append({"product_id": pid, "week_start": wk, "p10": p10, "p50": p50, "p90": p90})
     return pd.DataFrame(rows, columns=["product_id", "week_start", "p10", "p50", "p90"])
+
+
+def weekly_monday(daily: pd.DataFrame) -> pd.DataFrame:
+    """daily: product_id, date, p10, p50, p90[, low_confidence] -> calendar weeks starting Monday.
+    Only weeks with all 7 days forecast are kept (a partial week would understate demand)."""
+    d = daily.copy()
+    d["week_start"] = d["date"] - pd.to_timedelta(d["date"].dt.dayofweek, unit="D")
+    rows = []
+    for (pid, wk), g in d.groupby(["product_id", "week_start"], sort=True):
+        if len(g) < 7:
+            continue
+        p10, p50, p90 = sum_quantiles(g["p10"], g["p50"], g["p90"])
+        rows.append({"product_id": pid, "week_start": wk, "p10": p10, "p50": p50, "p90": p90,
+                     "low_confidence": bool(g.get("low_confidence", pd.Series([False])).any())})
+    return pd.DataFrame(rows, columns=["product_id", "week_start", "p10", "p50", "p90", "low_confidence"])

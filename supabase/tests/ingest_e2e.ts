@@ -58,4 +58,15 @@ const { error: crossErr } = await other.functions.invoke('ingest', { body: { upl
 const crossStatus = crossErr?.context?.status
 console.log(crossStatus === 404 ? 'CROSS-SHOP PASS (404)' : `CROSS-SHOP FAIL (${crossStatus})`)
 
-Deno.exit(ok && crossStatus === 404 ? 0 : 1)
+// The upload hands off to trigger-ml (runs after the response): a job row appears for this shop.
+// Locally Modal is not configured, so it is marked failed with that reason.
+let job: { type: string; status: string; error: string | null } | null = null
+for (let i = 0; i < 20 && job?.status !== 'failed' && job?.status !== 'succeeded'; i++) {
+  await new Promise((r) => setTimeout(r, 500))
+  job = (await db.from('ml_jobs').select('type, status, error').maybeSingle()).data
+}
+const handoffOk = job?.type === 'predict' &&
+  (job.status !== 'failed' || job.error === 'ML service is not configured')
+console.log(handoffOk ? `HANDOFF PASS (${job?.status}: ${job?.error ?? 'queued'})` : `HANDOFF FAIL (${JSON.stringify(job)})`)
+
+Deno.exit(ok && crossStatus === 404 && handoffOk ? 0 : 1)
