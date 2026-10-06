@@ -236,3 +236,17 @@ td.cd { font-weight: 700; }
 .dk-price em { font-style: normal; font-size: 34px; color: var(--teal); font-weight: 600; min-height: 44px; }
 .card .src { align-self: flex-start; }
 .suggest .btn { white-space: nowrap; }
+
+/* Sign-in and full-page messages */
+.topbar-right { display: flex; align-items: center; gap: 12px; }
+.login { min-height: 100vh; display: grid; place-items: center; padding: 24px; background: var(--page); }
+.login-card { width: 100%; max-width: 440px; }
+.login-brand { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: -0.02em; margin-bottom: 18px; }
+.login-card h1 { font-size: 24px; letter-spacing: -0.01em; margin-bottom: 6px; }
+.login-card form { display: grid; gap: 10px; margin-top: 8px; }
+.login-card label { font-size: 13.5px; font-weight: 600; color: var(--muted); }
+.login-card input { font: inherit; font-size: 16px; padding: 11px 13px; border: 1.5px solid var(--line); border-radius: 10px; background: #fff; }
+.login-card input:focus { outline: 2px solid var(--teal); outline-offset: 1px; border-color: var(--teal); }
+.login-sent { display: grid; gap: 12px; background: var(--teal-soft); border-radius: 10px; padding: 14px 16px; line-height: 1.5; }
+.login-error { color: var(--amber); font-size: 14px; }
+.login-card code { background: var(--page); padding: 1px 5px; border-radius: 5px; font-size: 13px; }
