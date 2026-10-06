@@ -13,7 +13,6 @@ dependencies = [
     "scipy>=1.13",
     "statsforecast>=1.7",
     "psycopg[binary]>=3.2",
-    "supabase>=2.6",
 ]
 
 [project.optional-dependencies]

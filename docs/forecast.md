@@ -52,8 +52,10 @@ product-week sums over non-stock-out days, pooled across products and windows.
   Promotion compares the candidate with the current champion's stored WAPE.
 - Promote when there is no champion, or candidate WAPE ≤ 0.95 × champion WAPE (5% relative).
   LightGBM must also beat the best baseline by 5%, otherwise the best baseline is the candidate.
-- Artifacts: Modal Volume `/models/{shop_id}/v{n}/` with `model.pkl` (LightGBM boosters, or the
-  baseline name), `meta.json` (features, params, library versions, trained_through). Training data
-  snapshot as Parquet in the `training-snapshots` bucket at `{shop_id}/v{n}.parquet`.
+- Artifacts: Modal Volume `/models/{shop_id}/v{n}/` with `model.pkl` (LightGBM models, or the
+  baseline name), `meta.json` (features, params, library versions, trained_through, backtest scores,
+  low-confidence products), and `data/*.parquet` (the exact sales/stock/products trained on).
+- Snapshots live on the private Volume, not the `training-snapshots` bucket: Supabase Storage keys
+  cannot be limited to one bucket, so this way Modal holds no storage key at all.
 - `model_versions` row per training run (candidate → champion; old champion → retired).
   Rollback = set an older version back to champion (`registry.rollback`).
