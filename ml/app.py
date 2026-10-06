@@ -7,7 +7,8 @@ app = modal.App("retailiq-ml")
 image = (
     modal.Image.debian_slim(python_version="3.12")
     .pip_install(
-        "pandas", "numpy", "pyarrow", "lightgbm", "statsforecast", "psycopg[binary]", "supabase"
+        "pandas", "numpy", "pyarrow", "lightgbm", "scikit-learn", "scipy", "statsforecast",
+        "psycopg[binary]", "supabase"
     )
     .add_local_python_source("retailiq_ml")
 )
