@@ -5,7 +5,7 @@ Source: build-guide.md, Phase 1. Migrations live in supabase/migrations/, pgTAP 
 ## Tables (all in `public`, all with `shop_id` except `holidays`)
 | Table | Notes |
 | --- | --- |
-| shops | One per auth user (`owner_user_id` unique). Created by trigger on signup. Holds True Cost rates (defaults from prototype: loan 8%, opportunity 15%, risk 3%, storage share of rent 15%). |
+| shops | One per auth user (`owner_user_id` unique). Created by trigger on signup. Holds True Cost settings (defaults from the prototype: loan 8%, opportunity 15%, service 3%, risk 12%, storage share of rent 15%, 60-day selling window; see docs/decisions.md). |
 | products | Unique per shop on normalised name (lower, trimmed, single spaces) so ingest merges duplicates. Trigram index on name for `find_product`. |
 | sales | One row per shop/product/day (PK). qty may be fractional (kg). |
 | stock_snapshots | One row per shop/product/day (PK). |

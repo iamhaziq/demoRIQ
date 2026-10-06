@@ -1,0 +1,1133 @@
+{
+ "_source": "Copied from src/data/demo-data.json (pitch-deck prototype). Expected values are the deck's numbers; do not edit to make tests pass.",
+ "business": {
+  "shop_name": "Demo store CA_1 (M5 benchmark data)",
+  "monthly_rent": 3000.0,
+  "monthly_utilities": 450.0,
+  "storage_share_of_rent": 0.15,
+  "demo_sku_share_of_shop": 0.1,
+  "financing_amount": 15000.0,
+  "financing_rate": 0.08,
+  "opportunity_rate": 0.15,
+  "service_rate": 0.03,
+  "cash_available": 8000.0
+ },
+ "kpis": {
+  "inventory_value": 5528.42,
+  "carrying_cost_per_month": 185.66,
+  "cash_trapped": 2813.08,
+  "slow_sku_count": 4
+ },
+ "products": [
+  {
+   "sku": "FOODS_3_090",
+   "category_code": "FOODS",
+   "size": "S",
+   "price": 1.6,
+   "cost": 1.19,
+   "stock": 420,
+   "avg_daily_sales_28d": 59.0,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 1538.7,
+    "p50": 1766.5,
+    "p90": 1994.3,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 499.8,
+   "cost_components": {
+    "financing": 10.85,
+    "space": 52.5,
+    "service": 14.99,
+    "risk": 59.98,
+    "opportunity": 54.63
+   },
+   "carrying_cost_annual": 192.95,
+   "cost_per_day": 0.53,
+   "cost_per_unit_per_day": 0.0013,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 60,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.08,
+    "holding_cost_total": 32.76,
+    "break_even_discount_pct": 24.9,
+    "start_discount_pct": 10,
+    "cash_released": 483.84,
+    "interest_avoided_per_year": 38.71,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 54.9,
+      "cash_released": 302.4,
+      "interest_avoided_per_year": 24.19
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 49.9,
+      "cash_released": 332.64,
+      "interest_avoided_per_year": 26.61
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 44.9,
+      "cash_released": 362.88,
+      "interest_avoided_per_year": 29.03
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 39.9,
+      "cash_released": 393.12,
+      "interest_avoided_per_year": 31.45
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 34.9,
+      "cash_released": 423.36,
+      "interest_avoided_per_year": 33.87
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 29.9,
+      "cash_released": 453.6,
+      "interest_avoided_per_year": 36.29
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 24.9,
+      "cash_released": 483.84,
+      "interest_avoided_per_year": 38.71
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 19.9,
+      "cash_released": 514.08,
+      "interest_avoided_per_year": 41.13
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 14.9,
+      "cash_released": 544.32,
+      "interest_avoided_per_year": 43.55
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 9.9,
+      "cash_released": 574.56,
+      "interest_avoided_per_year": 45.96
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 4.9,
+      "cash_released": 604.8,
+      "interest_avoided_per_year": 48.38
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 578,
+    "cash_required": 687.82,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "FOODS_3_586",
+   "category_code": "FOODS",
+   "size": "S",
+   "price": 1.68,
+   "cost": 1.24,
+   "stock": 324,
+   "avg_daily_sales_28d": 41.25,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 1066.8,
+    "p50": 1195.0,
+    "p90": 1323.2,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 401.76,
+   "cost_components": {
+    "financing": 8.72,
+    "space": 40.5,
+    "service": 12.05,
+    "risk": 48.21,
+    "opportunity": 43.91
+   },
+   "carrying_cost_annual": 153.4,
+   "cost_per_day": 0.42,
+   "cost_per_unit_per_day": 0.0013,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 60,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.08,
+    "holding_cost_total": 25.27,
+    "break_even_discount_pct": 24.6,
+    "start_discount_pct": 10,
+    "cash_released": 391.91,
+    "interest_avoided_per_year": 31.35,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 54.6,
+      "cash_released": 244.94,
+      "interest_avoided_per_year": 19.6
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 49.6,
+      "cash_released": 269.44,
+      "interest_avoided_per_year": 21.56
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 44.6,
+      "cash_released": 293.93,
+      "interest_avoided_per_year": 23.51
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 39.6,
+      "cash_released": 318.43,
+      "interest_avoided_per_year": 25.47
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 34.6,
+      "cash_released": 342.92,
+      "interest_avoided_per_year": 27.43
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 29.6,
+      "cash_released": 367.42,
+      "interest_avoided_per_year": 29.39
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 24.6,
+      "cash_released": 391.91,
+      "interest_avoided_per_year": 31.35
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 19.6,
+      "cash_released": 416.4,
+      "interest_avoided_per_year": 33.31
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 14.6,
+      "cash_released": 440.9,
+      "interest_avoided_per_year": 35.27
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 9.6,
+      "cash_released": 465.39,
+      "interest_avoided_per_year": 37.23
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 4.6,
+      "cash_released": 489.89,
+      "interest_avoided_per_year": 39.19
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 338,
+    "cash_required": 419.12,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "FOODS_3_252",
+   "category_code": "FOODS",
+   "size": "S",
+   "price": 1.58,
+   "cost": 1.17,
+   "stock": 198,
+   "avg_daily_sales_28d": 38.71,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 952.1,
+    "p50": 1100.5,
+    "p90": 1248.9,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 231.66,
+   "cost_components": {
+    "financing": 5.03,
+    "space": 24.75,
+    "service": 6.95,
+    "risk": 27.8,
+    "opportunity": 25.32
+   },
+   "carrying_cost_annual": 89.85,
+   "cost_per_day": 0.25,
+   "cost_per_unit_per_day": 0.0012,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 60,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.07,
+    "holding_cost_total": 14.26,
+    "break_even_discount_pct": 24.6,
+    "start_discount_pct": 10,
+    "cash_released": 225.24,
+    "interest_avoided_per_year": 18.02,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 54.6,
+      "cash_released": 140.78,
+      "interest_avoided_per_year": 11.26
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 49.6,
+      "cash_released": 154.86,
+      "interest_avoided_per_year": 12.39
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 44.6,
+      "cash_released": 168.93,
+      "interest_avoided_per_year": 13.51
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 39.6,
+      "cash_released": 183.01,
+      "interest_avoided_per_year": 14.64
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 34.6,
+      "cash_released": 197.09,
+      "interest_avoided_per_year": 15.77
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 29.6,
+      "cash_released": 211.17,
+      "interest_avoided_per_year": 16.89
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 24.6,
+      "cash_released": 225.24,
+      "interest_avoided_per_year": 18.02
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 19.6,
+      "cash_released": 239.32,
+      "interest_avoided_per_year": 19.15
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 14.6,
+      "cash_released": 253.4,
+      "interest_avoided_per_year": 20.27
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 9.6,
+      "cash_released": 267.48,
+      "interest_avoided_per_year": 21.4
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 4.6,
+      "cash_released": 281.56,
+      "interest_avoided_per_year": 22.52
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 427,
+    "cash_required": 499.59,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "FOODS_3_120",
+   "category_code": "FOODS",
+   "size": "S",
+   "price": 4.98,
+   "cost": 3.69,
+   "stock": 361,
+   "avg_daily_sales_28d": 43.14,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 681.1,
+    "p50": 1276.5,
+    "p90": 1871.9,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 1332.09,
+   "cost_components": {
+    "financing": 28.91,
+    "space": 45.12,
+    "service": 39.96,
+    "risk": 159.85,
+    "opportunity": 145.6
+   },
+   "carrying_cost_annual": 419.45,
+   "cost_per_day": 1.15,
+   "cost_per_unit_per_day": 0.0032,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 60,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.19,
+    "holding_cost_total": 69.31,
+    "break_even_discount_pct": 23.9,
+    "start_discount_pct": 10,
+    "cash_released": 1294.4,
+    "interest_avoided_per_year": 103.55,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 53.9,
+      "cash_released": 809.0,
+      "interest_avoided_per_year": 64.72
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 48.9,
+      "cash_released": 889.9,
+      "interest_avoided_per_year": 71.19
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 43.9,
+      "cash_released": 970.8,
+      "interest_avoided_per_year": 77.66
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 38.9,
+      "cash_released": 1051.7,
+      "interest_avoided_per_year": 84.14
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 33.9,
+      "cash_released": 1132.6,
+      "interest_avoided_per_year": 90.61
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 28.9,
+      "cash_released": 1213.5,
+      "interest_avoided_per_year": 97.08
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 23.9,
+      "cash_released": 1294.4,
+      "interest_avoided_per_year": 103.55
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 18.9,
+      "cash_released": 1375.3,
+      "interest_avoided_per_year": 110.02
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 13.9,
+      "cash_released": 1456.2,
+      "interest_avoided_per_year": 116.5
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 8.9,
+      "cash_released": 1537.1,
+      "interest_avoided_per_year": 122.97
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 3.9,
+      "cash_released": 1618.0,
+      "interest_avoided_per_year": 129.44
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 575,
+    "cash_required": 2121.75,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "FOODS_3_501",
+   "category_code": "FOODS",
+   "size": "S",
+   "price": 0.8,
+   "cost": 0.59,
+   "stock": 92,
+   "avg_daily_sales_28d": 22.93,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 362.9,
+    "p50": 579.0,
+    "p90": 795.1,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 54.28,
+   "cost_components": {
+    "financing": 1.18,
+    "space": 11.5,
+    "service": 1.63,
+    "risk": 6.51,
+    "opportunity": 5.93
+   },
+   "carrying_cost_annual": 26.75,
+   "cost_per_day": 0.07,
+   "cost_per_unit_per_day": 0.0008,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 60,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.05,
+    "holding_cost_total": 4.42,
+    "break_even_discount_pct": 26.0,
+    "start_discount_pct": 10,
+    "cash_released": 52.99,
+    "interest_avoided_per_year": 4.24,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 56.0,
+      "cash_released": 33.12,
+      "interest_avoided_per_year": 2.65
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 51.0,
+      "cash_released": 36.43,
+      "interest_avoided_per_year": 2.91
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 46.0,
+      "cash_released": 39.74,
+      "interest_avoided_per_year": 3.18
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 41.0,
+      "cash_released": 43.06,
+      "interest_avoided_per_year": 3.44
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 36.0,
+      "cash_released": 46.37,
+      "interest_avoided_per_year": 3.71
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 31.0,
+      "cash_released": 49.68,
+      "interest_avoided_per_year": 3.97
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 26.0,
+      "cash_released": 52.99,
+      "interest_avoided_per_year": 4.24
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 21.0,
+      "cash_released": 56.3,
+      "interest_avoided_per_year": 4.5
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 16.0,
+      "cash_released": 59.62,
+      "interest_avoided_per_year": 4.77
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 11.0,
+      "cash_released": 62.93,
+      "interest_avoided_per_year": 5.03
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 6.0,
+      "cash_released": 66.24,
+      "interest_avoided_per_year": 5.3
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 306,
+    "cash_required": 180.54,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "FOODS_3_064",
+   "category_code": "FOODS",
+   "size": "S",
+   "price": 1.18,
+   "cost": 0.87,
+   "stock": 225,
+   "avg_daily_sales_28d": 28.29,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 714.0,
+    "p50": 822.5,
+    "p90": 931.0,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 195.75,
+   "cost_components": {
+    "financing": 4.25,
+    "space": 28.12,
+    "service": 5.87,
+    "risk": 23.49,
+    "opportunity": 21.4
+   },
+   "carrying_cost_annual": 83.13,
+   "cost_per_day": 0.23,
+   "cost_per_unit_per_day": 0.001,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 60,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.06,
+    "holding_cost_total": 13.5,
+    "break_even_discount_pct": 25.1,
+    "start_discount_pct": 10,
+    "cash_released": 191.16,
+    "interest_avoided_per_year": 15.29,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 55.1,
+      "cash_released": 119.48,
+      "interest_avoided_per_year": 9.56
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 50.1,
+      "cash_released": 131.42,
+      "interest_avoided_per_year": 10.51
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 45.1,
+      "cash_released": 143.37,
+      "interest_avoided_per_year": 11.47
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 40.1,
+      "cash_released": 155.32,
+      "interest_avoided_per_year": 12.43
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 35.1,
+      "cash_released": 167.27,
+      "interest_avoided_per_year": 13.38
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 30.1,
+      "cash_released": 179.21,
+      "interest_avoided_per_year": 14.34
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 25.1,
+      "cash_released": 191.16,
+      "interest_avoided_per_year": 15.29
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 20.1,
+      "cash_released": 203.11,
+      "interest_avoided_per_year": 16.25
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 15.1,
+      "cash_released": 215.06,
+      "interest_avoided_per_year": 17.2
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 10.1,
+      "cash_released": 227.0,
+      "interest_avoided_per_year": 18.16
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 5.1,
+      "cash_released": 238.95,
+      "interest_avoided_per_year": 19.12
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 241,
+    "cash_required": 209.67,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "HOBBIES_1_002",
+   "category_code": "HOBBIES",
+   "size": "L",
+   "price": 3.97,
+   "cost": 2.94,
+   "stock": 79,
+   "avg_daily_sales_28d": 0.25,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 3.8,
+    "p50": 9.5,
+    "p90": 15.2,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 232.26,
+   "cost_components": {
+    "financing": 5.04,
+    "space": 59.25,
+    "service": 6.97,
+    "risk": 34.84,
+    "opportunity": 25.39
+   },
+   "carrying_cost_annual": 131.48,
+   "cost_per_day": 0.36,
+   "cost_per_unit_per_day": 0.0046,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 180,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.83,
+    "holding_cost_total": 65.41,
+    "break_even_discount_pct": 40.9,
+    "start_discount_pct": 10,
+    "cash_released": 225.81,
+    "interest_avoided_per_year": 18.07,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 70.9,
+      "cash_released": 141.13,
+      "interest_avoided_per_year": 11.29
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 65.9,
+      "cash_released": 155.25,
+      "interest_avoided_per_year": 12.42
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 60.9,
+      "cash_released": 169.36,
+      "interest_avoided_per_year": 13.55
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 55.9,
+      "cash_released": 183.47,
+      "interest_avoided_per_year": 14.68
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 50.9,
+      "cash_released": 197.59,
+      "interest_avoided_per_year": 15.81
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 45.9,
+      "cash_released": 211.7,
+      "interest_avoided_per_year": 16.94
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 40.9,
+      "cash_released": 225.81,
+      "interest_avoided_per_year": 18.07
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 35.9,
+      "cash_released": 239.93,
+      "interest_avoided_per_year": 19.19
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 30.9,
+      "cash_released": 254.04,
+      "interest_avoided_per_year": 20.32
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 25.9,
+      "cash_released": 268.15,
+      "interest_avoided_per_year": 21.45
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 20.9,
+      "cash_released": 282.27,
+      "interest_avoided_per_year": 22.58
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 0,
+    "cash_required": 0.0,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "HOBBIES_1_011",
+   "category_code": "HOBBIES",
+   "size": "L",
+   "price": 3.48,
+   "cost": 2.58,
+   "stock": 190,
+   "avg_daily_sales_28d": 0.04,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 0,
+    "p50": 1.0,
+    "p90": 5.0,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 490.2,
+   "cost_components": {
+    "financing": 10.64,
+    "space": 142.5,
+    "service": 14.71,
+    "risk": 73.53,
+    "opportunity": 53.58
+   },
+   "carrying_cost_annual": 294.96,
+   "cost_per_day": 0.81,
+   "cost_per_unit_per_day": 0.0043,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 180,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 0.77,
+    "holding_cost_total": 147.06,
+    "break_even_discount_pct": 42.2,
+    "start_discount_pct": 10,
+    "cash_released": 476.06,
+    "interest_avoided_per_year": 38.09,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 72.2,
+      "cash_released": 297.54,
+      "interest_avoided_per_year": 23.8
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 67.2,
+      "cash_released": 327.29,
+      "interest_avoided_per_year": 26.18
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 62.2,
+      "cash_released": 357.05,
+      "interest_avoided_per_year": 28.56
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 57.2,
+      "cash_released": 386.8,
+      "interest_avoided_per_year": 30.94
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 52.2,
+      "cash_released": 416.56,
+      "interest_avoided_per_year": 33.32
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 47.2,
+      "cash_released": 446.31,
+      "interest_avoided_per_year": 35.7
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 42.2,
+      "cash_released": 476.06,
+      "interest_avoided_per_year": 38.09
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 37.2,
+      "cash_released": 505.82,
+      "interest_avoided_per_year": 40.47
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 32.2,
+      "cash_released": 535.57,
+      "interest_avoided_per_year": 42.85
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 27.2,
+      "cash_released": 565.33,
+      "interest_avoided_per_year": 45.23
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 22.2,
+      "cash_released": 595.08,
+      "interest_avoided_per_year": 47.61
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 0,
+    "cash_required": 0.0,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "HOBBIES_1_012",
+   "category_code": "HOBBIES",
+   "size": "L",
+   "price": 6.52,
+   "cost": 4.83,
+   "stock": 114,
+   "avg_daily_sales_28d": 0.25,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 4.5,
+    "p50": 8.0,
+    "p90": 11.5,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 550.62,
+   "cost_components": {
+    "financing": 11.95,
+    "space": 85.5,
+    "service": 16.52,
+    "risk": 82.59,
+    "opportunity": 60.18
+   },
+   "carrying_cost_annual": 256.75,
+   "cost_per_day": 0.7,
+   "cost_per_unit_per_day": 0.0062,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 180,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 1.12,
+    "holding_cost_total": 127.22,
+    "break_even_discount_pct": 37.1,
+    "start_discount_pct": 10,
+    "cash_released": 535.16,
+    "interest_avoided_per_year": 42.81,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 67.1,
+      "cash_released": 334.48,
+      "interest_avoided_per_year": 26.76
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 62.1,
+      "cash_released": 367.92,
+      "interest_avoided_per_year": 29.43
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 57.1,
+      "cash_released": 401.37,
+      "interest_avoided_per_year": 32.11
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 52.1,
+      "cash_released": 434.82,
+      "interest_avoided_per_year": 34.79
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 47.1,
+      "cash_released": 468.27,
+      "interest_avoided_per_year": 37.46
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 42.1,
+      "cash_released": 501.71,
+      "interest_avoided_per_year": 40.14
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 37.1,
+      "cash_released": 535.16,
+      "interest_avoided_per_year": 42.81
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 32.1,
+      "cash_released": 568.61,
+      "interest_avoided_per_year": 45.49
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 27.1,
+      "cash_released": 602.06,
+      "interest_avoided_per_year": 48.16
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 22.1,
+      "cash_released": 635.5,
+      "interest_avoided_per_year": 50.84
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 17.1,
+      "cash_released": 668.95,
+      "interest_avoided_per_year": 53.52
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 0,
+    "cash_required": 0.0,
+    "affordable": true
+   }
+  },
+  {
+   "sku": "HOBBIES_1_018",
+   "category_code": "HOBBIES",
+   "size": "L",
+   "price": 11.88,
+   "cost": 8.8,
+   "stock": 175,
+   "avg_daily_sales_28d": 0.11,
+   "lead_time_days": 7,
+   "forecast_28d": {
+    "p10": 1.8,
+    "p50": 4.5,
+    "p90": 7.2,
+    "method": "seasonal_naive_drift"
+   },
+   "inventory_value": 1540.0,
+   "cost_components": {
+    "financing": 33.43,
+    "space": 131.25,
+    "service": 46.2,
+    "risk": 231.0,
+    "opportunity": 168.32
+   },
+   "carrying_cost_annual": 610.2,
+   "cost_per_day": 1.67,
+   "cost_per_unit_per_day": 0.0096,
+   "hold_or_clear": {
+    "clear_at_any_discount": false,
+    "holding_days": 180,
+    "sell_through": 0.8,
+    "holding_cost_per_unit": 1.73,
+    "holding_cost_total": 302.4,
+    "break_even_discount_pct": 34.5,
+    "start_discount_pct": 10,
+    "cash_released": 1496.88,
+    "interest_avoided_per_year": 119.75,
+    "by_sell_through": [
+     {
+      "sell_through": 0.5,
+      "break_even_discount_pct": 64.5,
+      "cash_released": 935.55,
+      "interest_avoided_per_year": 74.84
+     },
+     {
+      "sell_through": 0.55,
+      "break_even_discount_pct": 59.5,
+      "cash_released": 1029.11,
+      "interest_avoided_per_year": 82.33
+     },
+     {
+      "sell_through": 0.6,
+      "break_even_discount_pct": 54.5,
+      "cash_released": 1122.66,
+      "interest_avoided_per_year": 89.81
+     },
+     {
+      "sell_through": 0.65,
+      "break_even_discount_pct": 49.5,
+      "cash_released": 1216.22,
+      "interest_avoided_per_year": 97.3
+     },
+     {
+      "sell_through": 0.7,
+      "break_even_discount_pct": 44.5,
+      "cash_released": 1309.77,
+      "interest_avoided_per_year": 104.78
+     },
+     {
+      "sell_through": 0.75,
+      "break_even_discount_pct": 39.5,
+      "cash_released": 1403.33,
+      "interest_avoided_per_year": 112.27
+     },
+     {
+      "sell_through": 0.8,
+      "break_even_discount_pct": 34.5,
+      "cash_released": 1496.88,
+      "interest_avoided_per_year": 119.75
+     },
+     {
+      "sell_through": 0.85,
+      "break_even_discount_pct": 29.5,
+      "cash_released": 1590.44,
+      "interest_avoided_per_year": 127.23
+     },
+     {
+      "sell_through": 0.9,
+      "break_even_discount_pct": 24.5,
+      "cash_released": 1683.99,
+      "interest_avoided_per_year": 134.72
+     },
+     {
+      "sell_through": 0.95,
+      "break_even_discount_pct": 19.5,
+      "cash_released": 1777.55,
+      "interest_avoided_per_year": 142.2
+     },
+     {
+      "sell_through": 1.0,
+      "break_even_discount_pct": 14.5,
+      "cash_released": 1871.1,
+      "interest_avoided_per_year": 149.69
+     }
+    ]
+   },
+   "reorder": {
+    "recommended_qty": 0,
+    "cash_required": 0.0,
+    "affordable": true
+   }
+  }
+ ]
+}

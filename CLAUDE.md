@@ -29,4 +29,5 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - Tests (ingest end-to-end, local stack + functions serve running): deno run -A supabase/tests/ingest_e2e.ts
 - Upload templates: deno run -A scripts/make_templates.ts (writes public/templates/)
 - ML end-to-end on the local stack: cd ml && .venv/Scripts/python scripts/local_train.py
-- Specs per phase: docs/schema.md, docs/ingest.md, docs/forecast.md
+- Specs per phase: docs/schema.md, docs/ingest.md, docs/forecast.md, docs/decisions.md
+- Deck numbers are locked in ml/tests/fixtures/deck_examples.json; never edit expected values to make a test pass.
