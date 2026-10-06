@@ -117,7 +117,7 @@ def predict_shop(conn, shop_id: str, models_dir: str | Path, job_id: str | None 
                  today: date | None = None) -> dict:
     """Champion -> 28-day daily forecast -> weekly forecasts + decisions -> write back in one transaction.
     Trains first when the shop has no champion yet (a new shop's first upload)."""
-    from .decide import build_decisions, forecast_daily
+    from .decide import build_decisions, build_metrics, forecast_daily
     from .data import latest_stock, load_settings
     from .quantiles import weekly_monday
     from .registry import load_artifacts
@@ -143,8 +143,12 @@ def predict_shop(conn, shop_id: str, models_dir: str | Path, job_id: str | None 
         model, _meta = load_artifacts(champion["volume_path"])
         daily = forecast_daily(panel, model, data.holidays)
         as_of = panel["date"].max().date().isoformat()
-        decisions = build_decisions(load_settings(conn, shop_id), data.products, latest_stock(data.stock), daily, as_of)
-        written = write_results(conn, shop_id, champion["id"], weekly_monday(daily), decisions, today)
+        settings, stock = load_settings(conn, shop_id), latest_stock(data.stock)
+        wape = float(champion["wape"]) if champion.get("wape") is not None else None
+        decisions = build_decisions(settings, data.products, stock, daily, as_of, model_wape=wape)
+        metrics = build_metrics(settings, data.products, stock, daily, as_of)
+        written = write_results(conn, shop_id, champion["id"], weekly_monday(daily), decisions, today,
+                                daily=daily, metrics=metrics)
 
         set_job(conn, job_id, "succeeded")
         return {"shop_id": shop_id, "status": "predicted", "model_version": champion["version"],

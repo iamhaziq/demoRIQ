@@ -7,7 +7,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from retailiq_ml.decide import build_decisions, forecast_daily
+from retailiq_ml.decide import SELL_THROUGH_STEPS, build_decisions, build_metrics, confidence, forecast_daily
 from retailiq_ml.panel import build_panel
 from retailiq_ml.quantiles import weekly_monday
 from retailiq_ml.synthetic import make_holidays, make_shop
@@ -84,7 +84,7 @@ def test_reorders_match_deck(deck_decisions, p):
 
 def test_reason_json_follows_agent_contract(deck_decisions):
     r = deck_decisions[("FOODS_3_501", "REORDER")]["reason_json"]
-    assert set(r) == {"product", "as_of", "forecast", "true_cost", "reorder"}
+    assert set(r) == {"product", "as_of", "confidence", "forecast", "true_cost", "reorder"}
     assert {"stock_value", "cost_per_day", "annual_cost"} <= set(r["true_cost"])
     assert {"qty", "cash_required", "days_of_cover", "lead_time_days"} <= set(r["reorder"])
     json.dumps(r)  # storable as jsonb
@@ -120,3 +120,41 @@ def test_weekly_monday_keeps_full_weeks_only():
     assert w["week_start"].dt.strftime("%m-%d").tolist() == ["10-12", "10-19", "10-26"]
     assert w["p50"].tolist() == [14.0, 14.0, 14.0]
     assert w["p90"].iloc[0] == pytest.approx(14 + math.sqrt(7))
+
+
+def test_slider_rows_match_deck_sensitivity_table(deck_decisions):
+    rows = deck_decisions[("HOBBIES_1_018", "CLEAR")]["reason_json"]["hold_or_clear"]["by_sell_through"]
+    assert [r["sell_through"] for r in rows] == SELL_THROUGH_STEPS
+    deck = {r["sell_through"]: r for r in next(p for p in DECK["products"]
+                                               if p["sku"] == "HOBBIES_1_018")["hold_or_clear"]["by_sell_through"]}
+    for r in rows:
+        if r["sell_through"] in deck:
+            d = deck[r["sell_through"]]
+            assert (r["break_even_discount_pct"], r["cash_released"], r["interest_avoided_per_year"]) == (
+                d["break_even_discount_pct"], d["cash_released"], d["interest_avoided_per_year"])
+
+
+def test_confidence_labels():
+    assert confidence(True, 0.10) == "Low"
+    assert confidence(False, None) == "Low"
+    assert confidence(False, 0.20) == "High"
+    assert confidence(False, 0.30) == "Medium"
+    assert confidence(False, 0.45) == "Low"
+
+
+def test_metrics_for_every_product_match_deck():
+    prods, stock, daily = deck_inputs()
+    stock["received_date"] = pd.Timestamp("2026-09-20")
+    m = {r["product_id"]: r for r in build_metrics(SETTINGS, prods, stock, daily, AS_OF)}
+    assert set(m) == {p["sku"] for p in DECK["products"]}  # all products, not only those with a decision
+    for p in DECK["products"]:
+        r = m[p["sku"]]
+        assert r["stock_value"] == pytest.approx(p["inventory_value"])
+        assert r["cost_per_day"] == pytest.approx(p["cost_per_day"])
+        assert r["cost_30d"] == pytest.approx(p["cost_30d"], abs=0.011)
+        assert r["cost_180d"] == pytest.approx(p["cost_180d"], abs=0.011)
+        assert r["annual_cost"] == pytest.approx(p["carrying_cost_annual"], abs=0.011)
+    assert m["FOODS_3_501"]["days_of_cover"] == pytest.approx(4.45)
+    assert m["HOBBIES_1_018"]["slow_stock"] and not m["FOODS_3_501"]["slow_stock"]
+    assert m["FOODS_3_501"]["age_days"] == 16  # 2026-09-20 -> 2026-10-06
+    assert m["FOODS_3_501"]["forecast_p50"] == 579.0

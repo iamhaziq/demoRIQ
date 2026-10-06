@@ -13,7 +13,7 @@ import psycopg
 @dataclass
 class ShopData:
     sales: pd.DataFrame  # product_id, date, qty, revenue
-    stock: pd.DataFrame  # product_id, date, on_hand, on_order
+    stock: pd.DataFrame  # product_id, date, on_hand, on_order, received_date
     products: pd.DataFrame  # product_id, name, sku, category, unit_cost, unit_price, lead_time_days, pack_size,
     #                         shelf_space, risk_rate_pct, holding_days
     holidays: pd.DataFrame  # date, name, kind
@@ -41,10 +41,11 @@ def load_shop(conn, shop_id: str) -> ShopData:
     )
     stock = _frame(
         conn,
-        "select product_id::text, date, on_hand::float8, on_order::float8"
+        "select product_id::text, date, on_hand::float8, on_order::float8, received_date"
         " from public.stock_snapshots where shop_id = %s",
         (shop_id,),
-        ["product_id", "date", "on_hand", "on_order"],
+        ["product_id", "date", "on_hand", "on_order", "received_date"],
+        dates=("date", "received_date"),
     )
     products = _frame(
         conn,
@@ -76,10 +77,15 @@ def load_settings(conn, shop_id: str) -> dict:
 
 
 def latest_stock(stock: pd.DataFrame) -> pd.DataFrame:
-    """Most recent snapshot per product: product_id, date, on_hand, on_order."""
+    """Most recent snapshot per product: product_id, date, on_hand, on_order, received_date
+    (the latest delivery date seen for the product, if any)."""
     if stock.empty:
-        return pd.DataFrame(columns=["product_id", "date", "on_hand", "on_order"])
-    return stock.sort_values("date").groupby("product_id", as_index=False).tail(1).reset_index(drop=True)
+        return pd.DataFrame(columns=["product_id", "date", "on_hand", "on_order", "received_date"])
+    latest = stock.sort_values("date").groupby("product_id", as_index=False).tail(1).reset_index(drop=True)
+    if "received_date" in stock:
+        received = stock.groupby("product_id")["received_date"].max()
+        latest["received_date"] = latest["product_id"].map(received)
+    return latest
 
 
 def active_shops(conn) -> list[str]:

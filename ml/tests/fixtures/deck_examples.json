@@ -128,7 +128,9 @@
     "recommended_qty": 578,
     "cash_required": 687.82,
     "affordable": true
-   }
+   },
+   "cost_30d": 15.86,
+   "cost_180d": 95.15
   },
   {
    "sku": "FOODS_3_586",
@@ -239,7 +241,9 @@
     "recommended_qty": 338,
     "cash_required": 419.12,
     "affordable": true
-   }
+   },
+   "cost_30d": 12.61,
+   "cost_180d": 75.65
   },
   {
    "sku": "FOODS_3_252",
@@ -350,7 +354,9 @@
     "recommended_qty": 427,
     "cash_required": 499.59,
     "affordable": true
-   }
+   },
+   "cost_30d": 7.38,
+   "cost_180d": 44.31
   },
   {
    "sku": "FOODS_3_120",
@@ -461,7 +467,9 @@
     "recommended_qty": 575,
     "cash_required": 2121.75,
     "affordable": true
-   }
+   },
+   "cost_30d": 34.48,
+   "cost_180d": 206.85
   },
   {
    "sku": "FOODS_3_501",
@@ -572,7 +580,9 @@
     "recommended_qty": 306,
     "cash_required": 180.54,
     "affordable": true
-   }
+   },
+   "cost_30d": 2.2,
+   "cost_180d": 13.19
   },
   {
    "sku": "FOODS_3_064",
@@ -683,7 +693,9 @@
     "recommended_qty": 241,
     "cash_required": 209.67,
     "affordable": true
-   }
+   },
+   "cost_30d": 6.83,
+   "cost_180d": 41.0
   },
   {
    "sku": "HOBBIES_1_002",
@@ -794,7 +806,9 @@
     "recommended_qty": 0,
     "cash_required": 0.0,
     "affordable": true
-   }
+   },
+   "cost_30d": 10.81,
+   "cost_180d": 64.84
   },
   {
    "sku": "HOBBIES_1_011",
@@ -905,7 +919,9 @@
     "recommended_qty": 0,
     "cash_required": 0.0,
     "affordable": true
-   }
+   },
+   "cost_30d": 24.24,
+   "cost_180d": 145.46
   },
   {
    "sku": "HOBBIES_1_012",
@@ -1016,7 +1032,9 @@
     "recommended_qty": 0,
     "cash_required": 0.0,
     "affordable": true
-   }
+   },
+   "cost_30d": 21.1,
+   "cost_180d": 126.61
   },
   {
    "sku": "HOBBIES_1_018",
@@ -1127,7 +1145,9 @@
     "recommended_qty": 0,
     "cash_required": 0.0,
     "affordable": true
-   }
+   },
+   "cost_30d": 50.15,
+   "cost_180d": 300.92
   }
  ]
 }

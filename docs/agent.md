@@ -47,11 +47,14 @@ unknown or missing arguments, non-strings or over-long values are rejected, neve
 {
   "product": {"name": "...", "sku": "..."},
   "as_of": "2026-10-06",
+  "confidence": "High | Medium | Low",
+  "forecast": {"days": 28, "p10": 0, "p50": 0, "p90": 0, "low_confidence": false},
   "true_cost": { ...true_cost.TrueCost.reason },
   "reorder": { ...reorder.Reorder.reason, "qty": 306, "cash_required": 180.54 },
   "hold_or_clear": { ...true_cost.HoldOrClear.reason, "decision": "CLEAR", "discount_pct": 10,
                      "cash_released": 1496.88, "interest_avoided_per_year": 119.75,
-                     "holding_cost_total": 302.4, "clear_at_any_discount": false }
+                     "holding_cost_total": 302.4, "clear_at_any_discount": false,
+                     "by_sell_through": [{"sell_through": 0.5, "break_even_discount_pct": 64.5, ...}] }
 }
 ```
 `reorder` is present on REORDER rows, `hold_or_clear` on CLEAR/HOLD rows; `true_cost` on all.
