@@ -1,12 +1,11 @@
-import data, { englishFor } from '../data'
+import { MAX_QUESTION, SUGGESTED_QUESTIONS } from '../lib/ask'
 
-export default function AskBar({ value, onChange, onSubmit }) {
-  const subtitle = englishFor(value)
+export default function AskBar({ value, onChange, onSubmit, busy }) {
   return (
     <div className="askbar">
       <div className="askbar-inner">
         <div className="chips">
-          {data.suggested_questions.map((q) => (
+          {SUGGESTED_QUESTIONS.map((q) => (
             <button key={q} className="chip" onClick={() => onSubmit(q)}>
               {q}
             </button>
@@ -23,14 +22,14 @@ export default function AskBar({ value, onChange, onSubmit }) {
           <input
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="Ask in Malay or English: stock, cost, reorders, loan…"
+            maxLength={MAX_QUESTION}
+            placeholder="Ask in Malay or English: stock, cost, reorders, forecasts…"
             aria-label="Ask RetailIQ"
           />
-          <button type="submit">Ask</button>
+          <button type="submit" disabled={busy || !value.trim()}>
+            Ask
+          </button>
         </form>
-        <div className="subtitle" aria-live="polite">
-          {subtitle ? `English: ${subtitle}` : ''}
-        </div>
       </div>
     </div>
   )

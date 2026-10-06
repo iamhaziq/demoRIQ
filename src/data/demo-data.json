@@ -16,17 +16,6 @@
   "forecast_method_label": "Seasonal baseline with trend, from Walmart M5 sales history (prototype)",
   "disclaimer": "Demo data. Sales history and price levels are real M5 benchmark data (shown in RM); stock and cost inputs are simulated."
  },
- "malay_questions": [
-  {
-   "text": "Berapa kos stok perlahan saya?",
-   "en": "What is my slow stock costing me?"
-  }
- ],
- "suggested_questions": [
-  "What is my slow stock costing me?",
-  "Should I reorder FOODS_3_501?",
-  "How much of my loan could I repay?"
- ],
  "business": {
   "shop_name": "Demo store CA_1 (M5 benchmark data)",
   "monthly_rent": 3000.0,
@@ -9593,46 +9582,6 @@
     "Debt Freedom Planner"
    ],
    "draft": "Hi, after clearing slow stock I expect to free about RM1,496.88. I would like to discuss an early repayment against my financing."
-  }
- ],
- "agent_script": [
-  {
-   "match": [
-    "cost",
-    "costing",
-    "carrying",
-    "dead",
-    "slow",
-    "kos",
-    "perlahan"
-   ],
-   "card": "clear"
-  },
-  {
-   "match": [
-    "buy",
-    "order",
-    "reorder",
-    "restock",
-    "stock up",
-    "beli",
-    "tempah",
-    "pesan"
-   ],
-   "card": "reorder"
-  },
-  {
-   "match": [
-    "loan",
-    "debt",
-    "interest",
-    "riba",
-    "financing",
-    "hutang",
-    "pinjaman",
-    "faedah"
-   ],
-   "card": "debt"
   }
  ]
 }

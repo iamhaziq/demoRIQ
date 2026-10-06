@@ -56,6 +56,7 @@ h1, h2, h3, p { margin: 0; }
 .askrow { display: flex; gap: 12px; background: var(--card); border: 1.5px solid var(--navy); border-radius: var(--radius); padding: 10px 10px 10px 20px; box-shadow: 0 6px 24px rgba(19,34,63,.10); }
 .askrow input { flex: 1; border: 0; outline: 0; font: inherit; font-size: 18px; background: transparent; color: var(--navy); }
 .askrow button { background: var(--navy); color: #fff; border: 0; border-radius: 10px; padding: 12px 22px; font-weight: 600; font-size: 15px; }
+.askrow button:disabled { opacity: .5; cursor: default; }
 .askrow .label { align-self: center; color: var(--teal); font-weight: 700; font-size: 14px; white-space: nowrap; }
 
 /* ---------- agent overlay ---------- */
@@ -69,6 +70,9 @@ h1, h2, h3, p { margin: 0; }
 .spinner { width: 20px; height: 20px; border-radius: 50%; border: 3px solid var(--teal-soft); border-top-color: var(--teal); animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .explain { font-size: 16px; line-height: 1.5; color: var(--navy); margin-bottom: 14px; }
+.answer { white-space: pre-line; font-size: 17px; line-height: 1.6; color: var(--navy); }
+.answer-note { margin-top: 12px; font-size: 14px; color: var(--muted); }
+.sheet .state-box .chips { margin: 4px 0 0; }
 .nomatch p { font-size: 17px; margin-bottom: 14px; line-height: 1.5; }
 
 /* ---------- KPI tiles ---------- */
@@ -184,8 +188,6 @@ td.cd { font-weight: 700; }
 .card-top .confl { font-size: 13px; color: var(--muted); }
 
 /* ---------- script-driven additions ---------- */
-.subtitle { min-height: 22px; margin-top: 8px; padding-left: 20px; font-size: 15px; color: var(--muted); }
-.sheet-head .q em { font-style: normal; color: var(--muted); }
 .main { transition: opacity .8s ease; }
 .main.hidden { opacity: 0; }
 .card .src { font-size: 14px; font-weight: 500; color: var(--navy); transition: transform 6s ease-out, background .8s, padding .6s; }

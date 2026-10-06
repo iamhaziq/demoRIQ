@@ -59,6 +59,10 @@ unknown or missing arguments, non-strings or over-long values are rejected, neve
 ```
 `reorder` is present on REORDER rows, `hold_or_clear` on CLEAR/HOLD rows; `true_cost` on all.
 
+## Errors
+401 with no Authorization header or a token with no user (the anon key alone), 403 when the user has no shop,
+400 for a missing or over-500-character question. The frontend (`src/lib/ask.js`) offers a retry only on other errors.
+
 ## Logs
 `agent_logs` (question, tool calls, answer, fallback reason, model, latency, tokens) only when
 `shops.agent_log_consent` is true.

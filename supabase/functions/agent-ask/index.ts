@@ -47,6 +47,9 @@ Deno.serve(async (req) => {
     global: { headers: { Authorization: authorization } },
     auth: { persistSession: false },
   })
+  // The anon key alone is a valid JWT but no user: answer 401, not a permission error from the shops query.
+  const { data: auth } = await db.auth.getUser(authorization.replace(/^Bearer\s+/i, ''))
+  if (!auth?.user) return json(401, { error: 'not signed in' })
   const { data: shop, error: shopErr } = await db.from('shops').select('id, language, agent_log_consent').maybeSingle()
   if (shopErr) return json(500, { error: shopErr.message })
   if (!shop) return json(403, { error: 'no shop for this account' })

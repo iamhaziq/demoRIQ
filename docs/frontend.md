@@ -19,7 +19,7 @@ Everything flows through `src/data.js` (loads `src/data/demo-data.json`) and `sr
 | `StockCost.jsx` breakdown | `cost_components`, `carrying_rate_pct`, cost for 1/30/180/365 days | product metrics (true cost reason) | (A) |
 | `StockCost.jsx` hold-or-clear slider | `hold_or_clear.by_sell_through[]` (50–95%) | `reason_json.hold_or_clear` | **sensitivity rows not stored** (D) |
 | `StockCost.jsx` Debt Freedom | cash released, interest avoided, `meta.financing_label` | `reason_json.hold_or_clear`, `shops.loan_rate_pct` | (D) |
-| `AskBar.jsx` / `AgentOverlay.jsx` | `matchQuestion()` scripted answers, `englishFor()` subtitles, suggested questions | `functions.invoke('agent-ask')`; suggested questions become constants | overlay shows a text answer, not a card |
+| `AskBar.jsx` / `AgentOverlay.jsx` | done (step 3): `src/lib/ask.js` calls `agent-ask`; suggested questions are constants there | `functions.invoke('agent-ask')` | overlay shows the agent's text answer as sent (no card); fallback answers are labelled |
 | `App.jsx` `?demo=1`, `Cards.jsx` `?cards=1` | pitch-video autopilot and title cards | keep on demo JSON (decision needed) | – |
 
 ## Screens the guide needs that do not exist yet

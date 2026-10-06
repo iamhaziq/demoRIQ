@@ -1,16 +1,14 @@
-import data, { englishFor } from '../data'
-import DecisionCard from './DecisionCard'
+import { displayAnswer, SUGGESTED_QUESTIONS } from '../lib/ask'
 
-/** phase: 'checking' | 'answer' | 'nomatch' */
-export default function AgentOverlay({ query, phase, card, cardProps, onClose, onAsk }) {
-  const en = englishFor(query)
+/** ask: { query, phase: 'checking' | 'answer' | 'error', answer?, fallback?, error? } from useAsk. */
+export default function AgentOverlay({ ask, onClose, onAsk }) {
+  const { query, phase } = ask
   return (
     <div className="overlay" onClick={onClose}>
       <div className="sheet" onClick={(e) => e.stopPropagation()}>
         <div className="sheet-head">
           <span className="q">
             You asked: <b>{query}</b>
-            {en && <em> (English: {en})</em>}
           </span>
           <button onClick={onClose} aria-label="Close">
             ×
@@ -18,27 +16,31 @@ export default function AgentOverlay({ query, phase, card, cardProps, onClose, o
         </div>
 
         {phase === 'checking' && (
-          <div className="checking">
+          <div className="checking" role="status">
             <span className="spinner" />
             Checking your stock…
           </div>
         )}
 
-        {phase === 'answer' && card && (
-          <>
-            <p className="explain">
-              Here is what your stock data says. {card.confidence} confidence, based on{' '}
-              {card.sources.join(' and ')}.
-            </p>
-            <DecisionCard card={card} {...cardProps} />
-          </>
+        {phase === 'answer' && (
+          <div aria-live="polite">
+            <p className="answer">{displayAnswer(ask.answer)}</p>
+            {ask.fallback && (
+              <p className="answer-note">Short answer built straight from your stored numbers.</p>
+            )}
+          </div>
         )}
 
-        {phase === 'nomatch' && (
-          <div className="nomatch">
-            <p>I can only answer from your stock data. Try one of these.</p>
+        {phase === 'error' && (
+          <div className="state-box error" role="alert">
+            <b>No answer.</b> {ask.error.message}
+            {ask.error.retry !== false && (
+              <button className="btn" onClick={() => onAsk(query)}>
+                Try again
+              </button>
+            )}
             <div className="chips">
-              {data.suggested_questions.map((q) => (
+              {SUGGESTED_QUESTIONS.map((q) => (
                 <button key={q} className="chip" onClick={() => onAsk(q)}>
                   {q}
                 </button>
