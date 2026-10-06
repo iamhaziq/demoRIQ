@@ -12,9 +12,9 @@ Everything flows through `src/data.js` (loads `src/data/demo-data.json`) and `sr
 | `Today.jsx` KPIs | `kpis.inventory_value`, `carrying_cost_per_month`, `cash_trapped`, `slow_sku_count` | shop totals view | **needs per-product metrics** (see A) |
 | `Today.jsx` cards | `cards[]` (title, decision, why, evidence, impact, draft, confidence, sources) | `decisions` (current) + `reason_json`, mapped to card props in `src/lib/cards.js` | **confidence** not stored (B) |
 | `DecisionCard.jsx` Approve / Dismiss / Undo | local state only | insert `decision_feedback` (done / not_now; Undo deletes nothing, adds a newer row) | – |
-| `Forecast.jsx` product list | `products[]` | `products` | – |
-| `Forecast.jsx` chart | `history[sku]` (daily units), `forecast_daily[sku]` (daily p10/p50/p90) | `sales` (last 120 days) + daily forecast | **daily forecast not stored**, only weekly (C) |
-| `Forecast.jsx` side panel | `forecast_28d`, days of cover, lead time, reorder qty, cash, confidence | product metrics + current REORDER decision | (A) |
+| `Forecast.jsx` product list | done (step 4) | `products`; opens on the largest current REORDER | – |
+| `Forecast.jsx` chart | done (step 4) | `sales` (120 days to the run date) + `forecast_daily`, via `src/lib/forecastData.js` | – |
+| `Forecast.jsx` side panel | done (step 4) | `product_metrics` (incl. `confidence`) + current REORDER decision | – |
 | `StockCost.jsx` table | per product: stock, value, age, days of cover, cost/day, cost/30d | product metrics | **only products with a decision have cost data** (A) |
 | `StockCost.jsx` breakdown | `cost_components`, `carrying_rate_pct`, cost for 1/30/180/365 days | product metrics (true cost reason) | (A) |
 | `StockCost.jsx` hold-or-clear slider | `hold_or_clear.by_sell_through[]` (50–95%) | `reason_json.hold_or_clear` | **sensitivity rows not stored** (D) |
@@ -30,7 +30,7 @@ times / pack size / holding days, agent log consent).
 ## Backend additions needed first (written by Modal, so the UI never calculates)
 - **A. `product_metrics`** table, one row per product per prediction run (current rows only): on hand, stock value,
   days of cover, age (days since last stock increase), true cost components / annual / per day / 30 / 180 / 365 days,
-  rate, forecast 28-day P10/P50/P90, low_confidence, slow-stock flag. Plus a `shop_kpis` view for the Today tiles.
+  rate, forecast 28-day P10/P50/P90, low_confidence, confidence label (same rule as B), slow-stock flag. Plus a `shop_kpis` view for the Today tiles.
 - **B. confidence** label in `reason_json` (Low when low_confidence, otherwise from the champion's backtest WAPE).
 - **C. `forecast_daily`** table (28 rows per product, replaced each run) for the chart; weekly rows stay for the agent
   and live scoring.

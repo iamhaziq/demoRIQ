@@ -54,7 +54,7 @@ def write_results(conn, shop_id: str, model_version_id: str, weekly: pd.DataFram
         if metrics is not None:
             cols = ["product_id", "as_of", "on_hand", "stock_value", "days_of_cover", "age_days", "cost_components",
                     "annual_cost", "carrying_rate", "cost_per_day", "cost_30d", "cost_180d", "forecast_p10",
-                    "forecast_p50", "forecast_p90", "low_confidence", "slow_stock"]
+                    "forecast_p50", "forecast_p90", "low_confidence", "confidence", "slow_stock"]
             conn.execute("delete from public.product_metrics where shop_id = %s", (shop_id,))
             with conn.cursor() as cur:
                 cur.executemany(

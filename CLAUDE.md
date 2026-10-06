@@ -33,6 +33,7 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - Agent eval vs real Gemini (30 bilingual questions; run after any prompt/model change): deno run -A supabase/functions/agent-ask/eval/run_eval.ts
 - Tests (frontend pure modules): deno test --config supabase/functions/deno.json src/lib
 - Today screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/today_e2e.ts <shop_id>
+- Forecast screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/forecast_e2e.ts <shop_id>
 - Ask box e2e (after local_predict.py, functions running): deno run -A --config supabase/functions/deno.json supabase/tests/ask_e2e.ts <shop_id>
 - Frontend local: .env.local points at the local stack; magic-link emails in Mailpit http://127.0.0.1:54324
 - Upload templates: deno run -A scripts/make_templates.ts (writes public/templates/)

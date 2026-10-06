@@ -149,13 +149,14 @@ def build_decisions(settings: dict, products: pd.DataFrame, stock: pd.DataFrame,
 
 
 def build_metrics(settings: dict, products: pd.DataFrame, stock: pd.DataFrame, daily: pd.DataFrame,
-                  as_of: str) -> list[dict]:
+                  as_of: str, model_wape: float | None = None) -> list[dict]:
     """Rows for public.product_metrics: what the Stock Cost and Forecast screens show per product."""
     as_of_date = pd.Timestamp(as_of)
     rows = []
     for pid, _p, s, f, tc, ro, hc in _evaluate(settings, products, stock, daily):
         f10, f50, f90 = sum_quantiles(f["p10"], f["p50"], f["p90"])
         received = _num(s.get("received_date"))
+        low = bool(f["low_confidence"].any())
         rows.append({
             "product_id": pid,
             "as_of": as_of,
@@ -172,7 +173,8 @@ def build_metrics(settings: dict, products: pd.DataFrame, stock: pd.DataFrame, d
             "forecast_p10": round(f10, 1),
             "forecast_p50": round(f50, 1),
             "forecast_p90": round(f90, 1),
-            "low_confidence": bool(f["low_confidence"].any()),
+            "low_confidence": low,
+            "confidence": confidence(low, model_wape),
             "slow_stock": hc is not None and hc.reason["share_never_sold"] > 0,
         })
     return rows

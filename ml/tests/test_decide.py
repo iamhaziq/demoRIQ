@@ -158,3 +158,15 @@ def test_metrics_for_every_product_match_deck():
     assert m["HOBBIES_1_018"]["slow_stock"] and not m["FOODS_3_501"]["slow_stock"]
     assert m["FOODS_3_501"]["age_days"] == 16  # 2026-09-20 -> 2026-10-06
     assert m["FOODS_3_501"]["forecast_p50"] == 579.0
+    assert m["FOODS_3_501"]["confidence"] == "Low"  # no champion WAPE given
+
+
+def test_metrics_confidence_uses_champion_wape():
+    # Same rule as the cards: WAPE 0.20 < 0.25 -> High; 0.30 -> Medium; short history always Low.
+    prods, stock, daily = deck_inputs()
+    for wape, label in [(0.20, "High"), (0.30, "Medium")]:
+        m = {r["product_id"]: r for r in build_metrics(SETTINGS, prods, stock, daily, AS_OF, model_wape=wape)}
+        assert m["FOODS_3_501"]["confidence"] == label
+    daily.loc[daily.product_id == "FOODS_3_501", "low_confidence"] = True
+    m = {r["product_id"]: r for r in build_metrics(SETTINGS, prods, stock, daily, AS_OF, model_wape=0.20)}
+    assert m["FOODS_3_501"]["confidence"] == "Low"

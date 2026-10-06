@@ -1,7 +1,7 @@
 -- Run with: npx supabase test db
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(6);
+select plan(7);
 
 insert into auth.users (id, email) values
   ('11111111-1111-1111-1111-111111111111', 'a@test.my'),
@@ -29,6 +29,9 @@ select is((select count(*)::int from public.forecast_daily), 0, 'other users see
 select is((select count(*)::int from public.shop_kpis), 0, 'the KPI view respects RLS (security invoker)');
 select throws_ok($$delete from public.product_metrics$$, '42501', null, 'users cannot write metrics');
 reset role;
+
+select throws_ok($$update public.product_metrics set confidence = 'Great'$$, '23514', null,
+  'confidence is High, Medium or Low');
 
 select * from finish();
 rollback;

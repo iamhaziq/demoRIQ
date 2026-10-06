@@ -146,7 +146,7 @@ def predict_shop(conn, shop_id: str, models_dir: str | Path, job_id: str | None 
         settings, stock = load_settings(conn, shop_id), latest_stock(data.stock)
         wape = float(champion["wape"]) if champion.get("wape") is not None else None
         decisions = build_decisions(settings, data.products, stock, daily, as_of, model_wape=wape)
-        metrics = build_metrics(settings, data.products, stock, daily, as_of)
+        metrics = build_metrics(settings, data.products, stock, daily, as_of, model_wape=wape)
         written = write_results(conn, shop_id, champion["id"], weekly_monday(daily), decisions, today,
                                 daily=daily, metrics=metrics)
 

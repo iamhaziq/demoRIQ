@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { cardById, productsByCost } from './data'
+import { productsByCost } from './data'
 import { useAsk } from './lib/useAsk'
 import { Rail, TopBar } from './components/Shell'
 import AskBar from './components/AskBar'
@@ -8,7 +8,6 @@ import Today from './screens/Today'
 import Forecast from './screens/Forecast'
 import StockCost from './screens/StockCost'
 
-const REORDER_SKU = cardById.reorder.sku
 const TOP_COST_SKU = productsByCost[0].sku
 
 export default function App({ shop, onSignOut }) {
@@ -16,7 +15,6 @@ export default function App({ shop, onSignOut }) {
   const [text, setText] = useState('')
   const { ask, submit, close } = useAsk()
   const [costSku, setCostSku] = useState(TOP_COST_SKU)
-  const [forecastSku, setForecastSku] = useState(REORDER_SKU)
   const [promoOpen, setPromo] = useState(false)
 
   const askQuestion = (q) => {
@@ -30,7 +28,7 @@ export default function App({ shop, onSignOut }) {
       <TopBar shop={shop} onSignOut={onSignOut} />
       <main className="main">
         {view === 'today' && <Today shop={shop} />}
-        {view === 'forecast' && <Forecast sku={forecastSku} onSku={setForecastSku} />}
+        {view === 'forecast' && <Forecast />}
         {view === 'cost' && (
           <StockCost
             sku={costSku}
