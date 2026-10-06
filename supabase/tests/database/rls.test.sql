@@ -8,20 +8,23 @@ insert into auth.users (id, email) values
   ('11111111-1111-1111-1111-111111111111', 'a@test.my'),
   ('22222222-2222-2222-2222-222222222222', 'b@test.my');
 
-select is((select count(*)::int from public.shops), 2, 'signup trigger creates one shop per user');
+select is((select count(*)::int from public.shops where owner_user_id in ('11111111-1111-1111-1111-111111111111', '22222222-2222-2222-2222-222222222222')), 2,
+  'signup trigger creates one shop per user');
 
 -- Seed shop B with a product, sale and decision (as superuser).
 insert into public.products (id, shop_id, name)
 select 'bbbbbbbb-0000-0000-0000-000000000001', id, 'Milo 1kg' from public.shops
 where owner_user_id = '22222222-2222-2222-2222-222222222222';
 insert into public.sales (shop_id, product_id, date, qty)
-select shop_id, id, '2026-10-01', 3 from public.products;
+select shop_id, id, '2026-10-01', 3 from public.products where id = 'bbbbbbbb-0000-0000-0000-000000000001';
 insert into public.decisions (id, shop_id, product_id, type, reason_json)
-select 'dddddddd-0000-0000-0000-000000000001', shop_id, id, 'REORDER', '{}' from public.products;
+select 'dddddddd-0000-0000-0000-000000000001', shop_id, id, 'REORDER', '{}' from public.products
+where id = 'bbbbbbbb-0000-0000-0000-000000000001';
 
 -- Duplicate names merge on the normalised key.
 select throws_ok(
-  $$insert into public.products (shop_id, name) select shop_id, '  MILO   1KG ' from public.products$$,
+  $$insert into public.products (shop_id, name)
+    select shop_id, '  MILO   1KG ' from public.products where id = 'bbbbbbbb-0000-0000-0000-000000000001'$$,
   '23505', null, 'product names are unique per shop after normalising case and spaces');
 
 -- Act as user A.
@@ -74,7 +77,8 @@ reset role;
 grant ml_worker to postgres with set true; -- test-only, rolled back
 grant usage on schema extensions to ml_worker; -- so pgTAP's functions resolve
 set local role ml_worker;
-select is((select count(*)::int from public.sales), 1, 'ml_worker can read sales');
+select is((select count(*)::int from public.sales where product_id = 'bbbbbbbb-0000-0000-0000-000000000001'), 1,
+  'ml_worker can read sales across shops');
 select throws_ok($$delete from public.sales$$, '42501', null, 'ml_worker cannot write sales');
 reset role;
 
