@@ -2,25 +2,26 @@
 
 Source: build-guide.md, Phase 6. Rule: the UI only formats numbers; every number comes from Supabase.
 
-## Where the frontend uses demo data today
-Everything flows through `src/data.js` (loads `src/data/demo-data.json`) and `src/data/pitch-content.json`.
+## Where the frontend used demo data (all replaced; demo data removed in step 5)
+Everything flowed through `src/data.js` (`src/data/demo-data.json`), deleted in step 5 with the "Sample numbers" badge.
+The deck numbers it held are kept for tests in `ml/tests/fixtures/deck_examples.json`.
 
 | Where | Demo data used | Real source | Backend gap |
 | --- | --- | --- | --- |
 | `format.js` | `meta.currency` | constant `RM` | – |
-| `Shell.jsx` TopBar | `meta.store`, `meta.as_of`, demo badge | `shops.name`, last prediction run date | – |
+| `Shell.jsx` TopBar | done: `shops.name`; demo badge removed | `shops.name` | – |
 | `Today.jsx` KPIs | `kpis.inventory_value`, `carrying_cost_per_month`, `cash_trapped`, `slow_sku_count` | shop totals view | **needs per-product metrics** (see A) |
 | `Today.jsx` cards | `cards[]` (title, decision, why, evidence, impact, draft, confidence, sources) | `decisions` (current) + `reason_json`, mapped to card props in `src/lib/cards.js` | **confidence** not stored (B) |
 | `DecisionCard.jsx` Approve / Dismiss / Undo | local state only | insert `decision_feedback` (done / not_now; Undo deletes nothing, adds a newer row) | – |
 | `Forecast.jsx` product list | done (step 4) | `products`; opens on the largest current REORDER | – |
 | `Forecast.jsx` chart | done (step 4) | `sales` (120 days to the run date) + `forecast_daily`, via `src/lib/forecastData.js` | – |
 | `Forecast.jsx` side panel | done (step 4) | `product_metrics` (incl. `confidence`) + current REORDER decision | – |
-| `StockCost.jsx` table | per product: stock, value, age, days of cover, cost/day, cost/30d | product metrics | **only products with a decision have cost data** (A) |
-| `StockCost.jsx` breakdown | `cost_components`, `carrying_rate_pct`, cost for 1/30/180/365 days | product metrics (true cost reason) | (A) |
-| `StockCost.jsx` hold-or-clear slider | `hold_or_clear.by_sell_through[]` (50–95%) | `reason_json.hold_or_clear` | **sensitivity rows not stored** (D) |
-| `StockCost.jsx` Debt Freedom | cash released, interest avoided, `meta.financing_label` | `reason_json.hold_or_clear`, `shops.loan_rate_pct` | (D) |
+| `StockCost.jsx` table | done (step 5) | `product_metrics` (every product), highest cost per day first, via `src/lib/stockCostData.js` | – |
+| `StockCost.jsx` breakdown | done (step 5) | `product_metrics` cost components, rate, 1/30/180 days; 365 days = `annual_cost` | – |
+| `StockCost.jsx` hold-or-clear slider | done (step 5) | `reason_json.hold_or_clear.by_sell_through`, starting at `clearance_sell_through_assumed` | – |
+| `StockCost.jsx` Debt Freedom | done (step 5) | slider row cash/interest; rate = `hold_or_clear.loan_rate` used by that run | – |
 | `AskBar.jsx` / `AgentOverlay.jsx` | done (step 3): `src/lib/ask.js` calls `agent-ask`; suggested questions are constants there | `functions.invoke('agent-ask')` | overlay shows the agent's text answer as sent (no card); fallback answers are labelled |
-| `App.jsx` `?demo=1`, `Cards.jsx` `?cards=1` | pitch-video autopilot and title cards | keep on demo JSON (decision needed) | – |
+| `App.jsx` `?demo=1`, `Cards.jsx` `?cards=1` | pitch-video autopilot and title cards | removed (step 1; leftover CSS removed in step 5) | – |
 
 ## Screens the guide needs that do not exist yet
 Login (magic link / phone OTP), Upload + column mapping (+ templates in `public/templates/`), Data health card

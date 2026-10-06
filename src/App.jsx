@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { productsByCost } from './data'
 import { useAsk } from './lib/useAsk'
 import { Rail, TopBar } from './components/Shell'
 import AskBar from './components/AskBar'
@@ -8,14 +7,10 @@ import Today from './screens/Today'
 import Forecast from './screens/Forecast'
 import StockCost from './screens/StockCost'
 
-const TOP_COST_SKU = productsByCost[0].sku
-
 export default function App({ shop, onSignOut }) {
   const [view, setView] = useState('today')
   const [text, setText] = useState('')
   const { ask, submit, close } = useAsk()
-  const [costSku, setCostSku] = useState(TOP_COST_SKU)
-  const [promoOpen, setPromo] = useState(false)
 
   const askQuestion = (q) => {
     setText(q)
@@ -29,15 +24,7 @@ export default function App({ shop, onSignOut }) {
       <main className="main">
         {view === 'today' && <Today shop={shop} />}
         {view === 'forecast' && <Forecast />}
-        {view === 'cost' && (
-          <StockCost
-            sku={costSku}
-            onSku={setCostSku}
-            suggestShown
-            promoOpen={promoOpen}
-            onPromo={() => setPromo((v) => !v)}
-          />
-        )}
+        {view === 'cost' && <StockCost />}
       </main>
       {ask && <AgentOverlay ask={ask} onClose={close} onAsk={askQuestion} />}
       <AskBar value={text} onChange={setText} onSubmit={askQuestion} busy={ask?.phase === 'checking'} />

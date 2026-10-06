@@ -38,9 +38,6 @@ h1, h2, h3, p { margin: 0; }
 .topbar { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; border-bottom: 1px solid var(--line); background: var(--card); }
 .topbar .shop { font-size: 18px; font-weight: 600; }
 .topbar .shop small { font-weight: 400; color: var(--muted); font-size: 13px; margin-left: 10px; }
-.badge-demo { position: relative; background: var(--amber-soft); color: var(--amber); border: 1px solid #E6C79B; padding: 6px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; cursor: default; }
-.badge-demo .tip { display: none; position: absolute; right: 0; top: 40px; width: 340px; background: var(--navy); color: #fff; padding: 12px 14px; border-radius: 10px; font-weight: 400; font-size: 13px; line-height: 1.45; z-index: 30; }
-.badge-demo:hover .tip, .badge-demo:focus-visible .tip { display: block; }
 .main { overflow-y: auto; padding: 24px 40px 190px; }
 .page { max-width: 1480px; margin: 0 auto; }
 .page > h1 { font-size: 32px; letter-spacing: -0.02em; margin-bottom: 6px; }
@@ -145,9 +142,9 @@ select { font: inherit; font-size: 16px; padding: 10px 14px; border-radius: 10px
 /* ---------- stock cost ---------- */
 .cost-split { display: grid; grid-template-columns: minmax(0, 1fr) 540px; gap: 24px; align-items: start; }
 table { width: 100%; border-collapse: collapse; }
-.tablewrap { border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--card); }
-th { text-align: right; font-size: 13px; color: var(--muted); font-weight: 600; padding: 14px; border-bottom: 1px solid var(--line); background: var(--page); }
-td { text-align: right; padding: 15px 14px; border-bottom: 1px solid var(--line); font-size: 15px; }
+.tablewrap { border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; background: var(--card); }
+th { text-align: right; font-size: 13px; color: var(--muted); font-weight: 600; padding: 14px 10px; border-bottom: 1px solid var(--line); background: var(--page); }
+td { text-align: right; white-space: nowrap; padding: 15px 10px; border-bottom: 1px solid var(--line); font-size: 15px; }
 th:first-child, td:first-child { text-align: left; }
 tr:last-child td { border-bottom: 0; }
 tbody tr { cursor: pointer; }
@@ -187,17 +184,14 @@ td.cd { font-weight: 700; }
 .card-top { display: flex; justify-content: space-between; align-items: center; }
 .card-top .confl { font-size: 13px; color: var(--muted); }
 
-/* ---------- script-driven additions ---------- */
-.main { transition: opacity .8s ease; }
-.main.hidden { opacity: 0; }
-.card .src { font-size: 14px; font-weight: 500; color: var(--navy); transition: transform 6s ease-out, background .8s, padding .6s; }
+/* ---------- shared details ---------- */
+.card .src { font-size: 14px; font-weight: 500; color: var(--navy); }
 .sheet .src { font-size: 15px; }
 .card { transition: opacity .4s, transform .6s, box-shadow .6s; }
 
-/* staggered reveal: instant-ish normally, timed to the narration in demo mode */
+/* short reveal when a panel opens */
 @keyframes reveal { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 .reveal { animation: reveal .35s ease both; }
-.app[data-stagger="1"] .stagger { animation-duration: .6s; animation-delay: var(--d, 0s); }
 .total { margin-top: 14px; padding: 12px 14px; background: var(--amber-soft); border-radius: 10px; font-size: 15px; color: var(--muted); }
 .total b { font-size: 24px; color: var(--amber); }
 .suggest { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 14px; padding: 12px 14px; background: var(--teal-soft); border-radius: 10px; font-size: 15px; }
@@ -205,39 +199,7 @@ td.cd { font-weight: 700; }
 .suggest .btn { padding: 8px 12px; font-size: 13.5px; }
 .draft.promo { margin-top: 10px; font-size: 15.5px; }
 
-/* demo spotlights (set from demo.js through data-spot on .app) */
-.kpi.hero { transition: transform 10s ease-out, box-shadow 2s; }
-.app[data-spot="cash"] .kpi.hero { transform: scale(1.07); box-shadow: 0 16px 50px rgba(180,83,9,.25); }
-.app[data-spot="reorder"] .card:not(.c-REORDER) { opacity: .3; }
-.app[data-spot="reorder"] .card.c-REORDER { transform: scale(1.03); box-shadow: 0 0 0 3px var(--blue), 0 16px 48px rgba(29,78,216,.25); }
-.app[data-spot="footer"] .sheet .src { transform: scale(1.3); transform-origin: left center; background: var(--teal-soft); padding: 8px 12px; border-radius: 8px; }
-.be { transition: background .6s, padding .6s; border-radius: 10px; }
-.app[data-spot="breakeven"] .be { background: var(--amber-soft); padding: 8px 14px; }
-.app[data-spot="suggest"] .suggest, .app[data-spot="promo"] .promo { box-shadow: 0 0 0 3px var(--teal); }
-.debtfree { transition: transform 8s ease-out, box-shadow 2s; }
-.app[data-spot="debt"] .debtfree { transform: scale(1.06); box-shadow: 0 16px 40px rgba(15,118,110,.35); }
-
-/* ---------- title-card deck (?cards=1) ---------- */
-.dk { position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; padding: 80px; text-align: center; }
-.dk.navy { background: var(--navy); color: #fff; }
-.dk.teal { background: var(--teal); color: #fff; }
-.dk.page { background: var(--page); color: var(--navy); }
-.dk-logo { font-size: 150px; font-weight: 700; letter-spacing: -0.03em; }
-.dk-num { font-size: 230px; font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--teal); font-variant-numeric: tabular-nums; }
-.dk-num.amber { color: var(--amber); }
-.dk-num.white { color: #fff; }
-.dk-label { font-size: 56px; font-weight: 500; max-width: 1400px; line-height: 1.25; }
-.dk-label.white { color: #fff; }
-.dk.quiet { gap: 12px; }
-.dk-quiet { font-size: 84px; font-weight: 500; letter-spacing: -0.01em; opacity: 0; animation: reveal 1s ease forwards; }
-.dk-quiet:last-child { color: #7FD1C7; }
-.dk-prices { display: flex; gap: 40px; }
-.dk-price { width: 480px; background: var(--card); border: 1.5px solid var(--line); border-radius: 22px; padding: 56px 40px; display: flex; flex-direction: column; gap: 10px; min-height: 380px; justify-content: center; opacity: 0; animation: reveal .8s ease forwards; }
-.dk-price b { font-size: 110px; letter-spacing: -0.03em; color: var(--navy); }
-.dk-price span { font-size: 30px; color: var(--muted); min-height: 38px; }
-.dk-price em { font-style: normal; font-size: 34px; color: var(--teal); font-weight: 600; min-height: 44px; }
-.card .src { align-self: flex-start; }
-.suggest .btn { white-space: nowrap; }
+.be { border-radius: 10px; }
 
 /* Sign-in and full-page messages */
 .topbar-right { display: flex; align-items: center; gap: 12px; }

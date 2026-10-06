@@ -43,6 +43,13 @@ Deno.test('CLEAR card reproduces the deck card from stored numbers', () => {
   assertEquals(c.draft, 'Kopi Tongkat 200g: 10% off while stocks last. 175 units available in store.')
 })
 
+Deno.test('break-even of 100% or more reads as any discount, never as a percentage above 100', () => {
+  const h = { ...clear.reason_json.hold_or_clear, break_even_discount_pct: 142.5, clear_at_any_discount: true }
+  const [c] = toCards([{ ...clear, reason_json: { ...clear.reason_json, hold_or_clear: h } }], names, models)
+  assertMatch(c.why, /costs RM302\.40\. Any discount beats holding\.$/)
+  assertEquals(c.evidence[3], { label: 'Break-even discount', value: 'Any discount' })
+})
+
 Deno.test('HOLD rows are not cards; missing numbers show as a dash, not 0', () => {
   assertEquals(toCards([{ ...clear, type: 'HOLD' }], names, models), [])
   const noDays = { ...reorder, reason_json: { ...reorder.reason_json, reorder: { lead_time_days: 7 } } }

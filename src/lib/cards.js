@@ -34,8 +34,15 @@ function reorderCard(d, name, source) {
   }
 }
 
+/** Shop-window promo text for a clearance (Today card and Stock Cost screen). */
+export function promoDraft(name, discountPct, units) {
+  return `${name}: ${discountPct}% off while stocks last. ${num(units)} units available in store.`
+}
+
 function clearCard(d, name, source) {
   const h = d.reason_json.hold_or_clear ?? {}
+  // Break-even at 100% or more: holding costs more than any discount gives away.
+  const breakEven = h.clear_at_any_discount ? 'any discount' : `${h.break_even_discount_pct}%`
   return {
     id: d.id,
     type: 'CLEAR',
@@ -43,17 +50,17 @@ function clearCard(d, name, source) {
     decision: `Start a ${h.discount_pct}% clearance now. Holding until the next season costs more.`,
     why:
       `${num(h.units)} units are not expected to sell in the next ${h.holding_days} days at full price. ` +
-      `Holding them that long costs ${money(h.holding_cost_total)}. Any discount below ${h.break_even_discount_pct}% beats holding.`,
+      `Holding them that long costs ${money(h.holding_cost_total)}. ${h.clear_at_any_discount ? 'Any discount beats holding.' : `Any discount below ${breakEven} beats holding.`}`,
     evidence: [
       { label: 'Units on shelf', value: num(h.units) },
       { label: 'Selling window', value: `${h.holding_days} days` },
       { label: 'Holding cost per unit', value: money(h.holding_cost_per_unit) },
-      { label: 'Break-even discount', value: `${h.break_even_discount_pct}%` },
+      { label: 'Break-even discount', value: h.clear_at_any_discount ? 'Any discount' : breakEven },
     ],
     impact: { label: 'Cash released', value: money(h.cash_released) },
     confidence: d.reason_json.confidence ?? 'Low',
     sources: ['True Cost of Stock', source].filter(Boolean),
-    draft: `${name}: ${h.discount_pct}% off while stocks last. ${num(h.units)} units available in store.`,
+    draft: promoDraft(name, h.discount_pct, h.units),
   }
 }
 

@@ -10,6 +10,9 @@ export const money0 = (n) => (missing(n) ? '–' : `${CUR}${Number(n).toLocaleSt
 
 export const num = (n) => (missing(n) ? '–' : Number(n).toLocaleString('en-US', { maximumFractionDigits: 1 }))
 
+/** 0.3962 -> "39.6%" (a stored fraction shown as a percentage). */
+export const pct = (fraction) => (missing(fraction) ? '–' : `${(Number(fraction) * 100).toLocaleString('en-US', { maximumFractionDigits: 1 })}%`)
+
 export const showValue = (v) => (typeof v === 'number' ? num(v) : v)
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
