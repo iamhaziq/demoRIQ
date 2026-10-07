@@ -1,9 +1,9 @@
-import data from '../data'
-
 const NAV = [
   ['today', 'Today'],
   ['forecast', 'Forecast'],
   ['cost', 'Stock Cost'],
+  ['upload', 'Upload'],
+  ['settings', 'Settings'],
 ]
 
 export function Rail({ view, onView }) {
@@ -11,7 +11,7 @@ export function Rail({ view, onView }) {
     <aside className="rail">
       <div className="brand">
         <b>RetailIQ</b>
-        <span>Prototype</span>
+        <span>Pilot</span>
       </div>
       <nav className="nav">
         {NAV.map(([id, label]) => (
@@ -24,16 +24,14 @@ export function Rail({ view, onView }) {
   )
 }
 
-export function TopBar() {
+export function TopBar({ shop, onSignOut }) {
   return (
     <header className="topbar">
-      <div className="shop">
-        Demo store {data.meta.store}
-        <small>as of {data.meta.as_of}</small>
-      </div>
-      <div className="badge-demo" tabIndex={0}>
-        Demo data: Walmart M5 benchmark · Stock levels simulated
-        <span className="tip">{data.meta.disclaimer}</span>
+      <div className="shop">{shop.name}</div>
+      <div className="topbar-right">
+        <button className="btn ghost" onClick={onSignOut}>
+          Sign out
+        </button>
       </div>
     </header>
   )

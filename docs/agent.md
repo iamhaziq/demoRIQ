@@ -47,14 +47,21 @@ unknown or missing arguments, non-strings or over-long values are rejected, neve
 {
   "product": {"name": "...", "sku": "..."},
   "as_of": "2026-10-06",
+  "confidence": "High | Medium | Low",
+  "forecast": {"days": 28, "p10": 0, "p50": 0, "p90": 0, "low_confidence": false},
   "true_cost": { ...true_cost.TrueCost.reason },
   "reorder": { ...reorder.Reorder.reason, "qty": 306, "cash_required": 180.54 },
   "hold_or_clear": { ...true_cost.HoldOrClear.reason, "decision": "CLEAR", "discount_pct": 10,
                      "cash_released": 1496.88, "interest_avoided_per_year": 119.75,
-                     "holding_cost_total": 302.4, "clear_at_any_discount": false }
+                     "holding_cost_total": 302.4, "clear_at_any_discount": false,
+                     "by_sell_through": [{"sell_through": 0.5, "break_even_discount_pct": 64.5, ...}] }
 }
 ```
 `reorder` is present on REORDER rows, `hold_or_clear` on CLEAR/HOLD rows; `true_cost` on all.
+
+## Errors
+401 with no Authorization header or a token with no user (the anon key alone), 403 when the user has no shop,
+400 for a missing or over-500-character question. The frontend (`src/lib/ask.js`) offers a retry only on other errors.
 
 ## Logs
 `agent_logs` (question, tool calls, answer, fallback reason, model, latency, tokens) only when

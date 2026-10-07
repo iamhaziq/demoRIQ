@@ -1,112 +1,115 @@
 import { useState } from 'react'
-import data, { productBySku, productsByCost } from '../data'
-import { money, num } from '../format'
+import { money, num, pct } from '../format'
+import { useStockCost } from '../lib/useStockCost'
 
-// Order matches the voiceover: financing, shelf space, handling, spoilage, profit forgone.
-// `at` is when each one appears (seconds) in demo/stagger mode, timed to the narration.
 const COMPONENTS = [
-  ['financing', 'Financing', '#13223F', 3.5],
-  ['space', 'Shelf space', '#0F766E', 4.9],
-  ['service', 'Handling', '#7C8DB5', 5.9],
-  ['risk', 'Spoilage risk', '#B45309', 7.0],
-  ['opportunity', 'Profit forgone', '#8E6BBF', 9.1],
+  ['financing', 'Financing', '#13223F'],
+  ['space', 'Shelf space', '#0F766E'],
+  ['service', 'Handling', '#7C8DB5'],
+  ['risk', 'Spoilage risk', '#B45309'],
+  ['opportunity', 'Profit forgone', '#8E6BBF'],
 ]
-const TOTAL_AT = 12.5
 
-function HoldOrClear({ p, suggestShown, promoOpen, onPromo }) {
-  const rows = p.hold_or_clear.by_sell_through
-  const start = Math.max(0, rows.findIndex((r) => r.sell_through === p.hold_or_clear.sell_through))
-  const [i, setI] = useState(start)
-  const r = rows[i]
+const days = (v) => (v === null ? '–' : `${num(v)} days`)
+
+function HoldOrClear({ h }) {
+  const [i, setI] = useState(h.start)
+  const [promoOpen, setPromo] = useState(false)
+  const r = h.rows[i]
+  const first = h.rows[0]
+  const last = h.rows[h.rows.length - 1]
   return (
     <div className="block">
       <h3>Hold or clear</h3>
-      <div className="hint">If this share of your {num(p.stock)} units sells:</div>
+      <div className="hint">If this share of your {num(h.units)} units sells:</div>
       <input
         className="slider"
         type="range"
         min={0}
-        max={rows.length - 1}
+        max={h.rows.length - 1}
         step={1}
         value={i}
         onChange={(e) => setI(Number(e.target.value))}
         aria-label="Sell-through"
       />
       <div className="ticks">
-        <span>{Math.round(rows[0].sell_through * 100)}%</span>
-        <b>{Math.round(r.sell_through * 100)}% sell</b>
-        <span>{Math.round(rows[rows.length - 1].sell_through * 100)}%</span>
+        <span>{pct(first.sellThrough)}</span>
+        <b>{pct(r.sellThrough)} sell</b>
+        <span>{pct(last.sellThrough)}</span>
       </div>
       <div className="be">
         <span>Break-even discount</span>
-        <b>{r.clear_at_any_discount ? '95%+' : `${r.break_even_discount_pct}%`}</b>
+        <b>{r.clearAtAnyDiscount ? 'Any discount' : r.breakEvenPct === null ? '–' : `${num(r.breakEvenPct)}%`}</b>
       </div>
       <p className="hint">
-        Holding for {r.holding_days} days costs {money(r.holding_cost_per_unit)} per unit ({money(r.holding_cost_total)} in
+        Holding for {days(h.holdingDays)} costs {money(h.holdingCostPerUnit)} per unit ({money(h.holdingCostTotal)} in
         total). Any discount below the break-even beats holding.
       </p>
 
-      {suggestShown && (
-        <div className="suggest reveal">
+      {r.discountPct !== null ? (
+        <>
+          <div className="suggest">
+            <span>
+              RetailIQ recommends: <b>start at {num(r.discountPct)}% off</b>
+            </span>
+            <button className="btn" onClick={() => setPromo((v) => !v)}>
+              {promoOpen ? 'Hide promo message' : 'Draft promo message'}
+            </button>
+          </div>
+          {promoOpen && <div className="draft promo">{r.draft}</div>}
+        </>
+      ) : (
+        <div className="suggest">
           <span>
-            The agent recommends: <b>start at {r.start_discount_pct}% off</b>
+            RetailIQ recommends: <b>hold for now</b>. No discount step is below the break-even.
           </span>
-          <button className="btn" onClick={onPromo}>
-            {promoOpen ? 'Hide promo message' : 'Draft promo message'}
-          </button>
         </div>
       )}
-      {suggestShown && promoOpen && <div className="draft promo reveal">{p.promo_draft}</div>}
 
-      <DebtFree r={r} />
-    </div>
-  )
-}
-
-function DebtFree({ r }) {
-  return (
-    <div className="debtfree" style={{ marginTop: 18 }}>
-      <h3>Debt Freedom</h3>
-      <div className="row">
-        <div>
-          <span>Cash released</span>
-          <b>{money(r.cash_released)}</b>
+      <div className="debtfree" style={{ marginTop: 18 }}>
+        <h3>Debt Freedom</h3>
+        <div className="row">
+          <div>
+            <span>Cash released</span>
+            <b>{money(r.cashReleased)}</b>
+          </div>
+          <span className="arrow">→</span>
+          <div>
+            <span>Interest avoided</span>
+            <b>{money(r.interestAvoided)} / year</b>
+          </div>
         </div>
-        <span className="arrow">→</span>
-        <div>
-          <span>Interest avoided</span>
-          <b>{money(r.interest_avoided_per_year)} / year</b>
-        </div>
+        <small>Financing rate: {pct(h.loanRate)} per year, from your settings when the numbers were run</small>
       </div>
-      <small>Financing rate: {data.meta.financing_label}</small>
     </div>
   )
 }
 
-function Detail({ p, ...hold }) {
-  const c = p.cost_components
+function Detail({ row, d }) {
+  const c = d.components
   return (
     <div className="detail panel">
       <div>
         <h2>
-          {p.name}
-          <span className={`tag ${p.slow_stock ? '' : 'ok'}`}>{p.slow_stock ? 'Slow stock' : 'Fast mover'}</span>
+          {row.name}
+          <span className={`tag ${row.slow ? '' : 'ok'}`}>{row.slow ? 'Slow stock' : 'Selling'}</span>
         </h2>
         <p className="sub" style={{ marginBottom: 0 }}>
-          {p.sku} · {num(p.stock)} units · {money(p.inventory_value)} at cost · {p.age_days} days old
+          {[row.sku, `${num(row.onHand)} units`, `${money(row.stockValue)} at cost`,
+            row.ageDays === null ? null : `${num(row.ageDays)} days since last delivery`].filter(Boolean).join(' · ')}
         </p>
       </div>
 
       <div className="block">
-        <h3>What holding it costs, per year: {money(p.carrying_cost_annual)}</h3>
+        <h3>What holding it costs, per year: {money(d.annualCost)}</h3>
         <div className="stack" role="img" aria-label="Carrying cost split">
-          {COMPONENTS.map(([k, , color, at]) => (
-            <div key={k} className="reveal stagger" style={{ flexGrow: c[k], background: color, '--d': `${at}s` }} />
+          {COMPONENTS.map(([k, , color]) => (
+            <div key={k} className="reveal" style={{ flexGrow: c[k] ?? 0, background: color }} />
           ))}
         </div>
         <div className="comp">
-          {COMPONENTS.map(([k, label, color, at]) => (
-            <div key={k} className="reveal stagger" style={{ '--d': `${at}s` }}>
+          {COMPONENTS.map(([k, label, color]) => (
+            <div key={k} className="reveal">
               <i style={{ background: color }} />
               <span>
                 {label}
@@ -115,26 +118,26 @@ function Detail({ p, ...hold }) {
             </div>
           ))}
         </div>
-        <div className="total reveal stagger" style={{ '--d': `${TOTAL_AT}s` }}>
-          Together: <b>{p.carrying_rate_pct}</b> of the stock's value, every year
+        <div className="total reveal">
+          Together: <b>{pct(d.carryingRate)}</b> of the stock's value, every year
         </div>
       </div>
 
       <div className="block">
         <h3>Cost of holding it for…</h3>
         <div className="horizon">
-          <div><span>1 day</span><b>{money(p.cost_per_day)}</b></div>
-          <div><span>30 days</span><b>{money(p.cost_30d)}</b></div>
-          <div><span>180 days</span><b>{money(p.cost_180d)}</b></div>
-          <div><span>365 days</span><b>{money(p.cost_365d)}</b></div>
+          <div><span>1 day</span><b>{money(d.horizon.day)}</b></div>
+          <div><span>30 days</span><b>{money(d.horizon.d30)}</b></div>
+          <div><span>180 days</span><b>{money(d.horizon.d180)}</b></div>
+          <div><span>365 days</span><b>{money(d.horizon.d365)}</b></div>
         </div>
       </div>
 
-      {p.slow_stock ? (
-        <HoldOrClear key={p.sku} p={p} {...hold} />
+      {d.hold ? (
+        <HoldOrClear key={row.id} h={d.hold} />
       ) : (
         <p className="hint">
-          This product is selling: {p.days_of_cover_text} of stock left. Clearing it is not recommended. See the Forecast
+          This product is selling: {days(row.daysOfCover)} of stock left. Clearing it is not recommended. See the Forecast
           screen for reordering.
         </p>
       )}
@@ -142,11 +145,51 @@ function Detail({ p, ...hold }) {
   )
 }
 
-export default function StockCost({ sku, onSku, ...hold }) {
-  const p = productBySku[sku]
+function Page({ children }) {
   return (
     <div className="page">
       <h1>True cost of stock</h1>
+      {children}
+    </div>
+  )
+}
+
+export default function StockCost() {
+  const { loading, error, rows, details, reload } = useStockCost()
+  const [picked, setPicked] = useState(null)
+
+  if (loading && !rows.length) {
+    return (
+      <Page>
+        <p className="lede state">Loading your stock…</p>
+      </Page>
+    )
+  }
+  if (error) {
+    return (
+      <Page>
+        <div className="state-box error" role="alert">
+          <b>We could not load your stock costs.</b> {error.message}
+          <button className="btn" onClick={reload}>Try again</button>
+        </div>
+      </Page>
+    )
+  }
+  if (!rows.length) {
+    return (
+      <Page>
+        <div className="state-box">
+          <b>Upload your sales and stock to see this.</b> RetailIQ works out what each product costs you to hold
+          overnight after your first upload. Products need a stock count and a unit cost.
+        </div>
+      </Page>
+    )
+  }
+
+  const id = details[picked] ? picked : rows[0].id
+  const row = rows.find((r) => r.id === id)
+  return (
+    <Page>
       <p className="lede">What every product costs you each day it sits on the shelf.</p>
 
       <div className="cost-split">
@@ -164,26 +207,26 @@ export default function StockCost({ sku, onSku, ...hold }) {
               </tr>
             </thead>
             <tbody>
-              {productsByCost.map((x) => (
-                <tr key={x.sku} className={x.sku === sku ? 'sel' : ''} onClick={() => onSku(x.sku)}>
+              {rows.map((x) => (
+                <tr key={x.id} className={x.id === id ? 'sel' : ''} onClick={() => setPicked(x.id)}>
                   <td>
-                    {x.slow_stock && <span className="warn">⚠ </span>}
+                    {x.slow && <span className="warn">⚠ </span>}
                     {x.name}
-                    <span className="sku">{x.sku}</span>
+                    {x.sku && <span className="sku">{x.sku}</span>}
                   </td>
-                  <td>{num(x.stock)}</td>
-                  <td>{money(x.inventory_value)}</td>
-                  <td>{x.age_days} d</td>
-                  <td>{x.days_of_cover_text}</td>
-                  <td className="cd">{money(x.cost_per_day)}</td>
-                  <td>{money(x.cost_30d)}</td>
+                  <td>{num(x.onHand)}</td>
+                  <td>{money(x.stockValue)}</td>
+                  <td>{x.ageDays === null ? '–' : `${num(x.ageDays)} d`}</td>
+                  <td>{num(x.daysOfCover)}</td>
+                  <td className="cd">{money(x.costPerDay)}</td>
+                  <td>{money(x.cost30d)}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <Detail key={sku} p={p} {...hold} />
+        <Detail key={id} row={row} d={details[id]} />
       </div>
-    </div>
+    </Page>
   )
 }

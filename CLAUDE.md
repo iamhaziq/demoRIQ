@@ -16,7 +16,8 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - ml/retailiq_ml/decisions/ is pure Python: no Modal or database imports.
 - ML logic lives in retailiq_ml/pipeline.py (runs locally); ml/app.py only wraps it for Modal.
 - Edge Functions use the caller's JWT, never the service-role key; privileged steps are security definer SQL functions scoped by current_shop_id().
-- supabase/functions/_shared/columns.ts is pure TS shared with the frontend (Vite imports it); no Deno APIs there.
+- supabase/functions/_shared/columns.ts and sheet.ts are pure TS shared with the frontend (Vite imports them); no Deno APIs there.
+- Frontend: data logic in plain modules under src/lib taking the Supabase client as a parameter (testable with Deno); hooks only wire them to React. Missing numbers render as '–', never 0.
 - Never commit secrets: frontend uses .env.local (VITE_ vars, anon key only); supabase/functions/.env and Modal secrets stay out of git.
 
 ## Commands
@@ -30,6 +31,14 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - Tests (ingest end-to-end, local stack + functions serve running): deno run -A supabase/tests/ingest_e2e.ts
 - Tests (agent tools + endpoint, local stack + functions serve): deno run -A --config supabase/functions/deno.json supabase/tests/agent_tools_e2e.ts
 - Agent eval vs real Gemini (30 bilingual questions; run after any prompt/model change): deno run -A supabase/functions/agent-ask/eval/run_eval.ts
+- Tests (frontend pure modules, after npm install): deno test --allow-read --config supabase/functions/deno.json src/lib
+- Today screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/today_e2e.ts <shop_id>
+- Forecast screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/forecast_e2e.ts <shop_id>
+- Stock Cost screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/stock_cost_e2e.ts <shop_id>
+- Settings e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/settings_e2e.ts <shop_id>
+- Upload e2e (local stack + functions; checks Realtime job status): deno run -A --config supabase/functions/deno.json supabase/tests/upload_e2e.ts
+- Ask box e2e (after local_predict.py, functions running): deno run -A --config supabase/functions/deno.json supabase/tests/ask_e2e.ts <shop_id>
+- Frontend local: .env.local points at the local stack; magic-link emails in Mailpit http://127.0.0.1:54324
 - Upload templates: deno run -A scripts/make_templates.ts (writes public/templates/)
 - ML end-to-end on the local stack: cd ml && .venv/Scripts/python scripts/local_train.py | scripts/local_predict.py
 - Agent reads pipeline output: deno run -A --config supabase/functions/deno.json supabase/tests/agent_on_pipeline_e2e.ts <shop_id>

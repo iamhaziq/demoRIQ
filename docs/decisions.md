@@ -1,6 +1,6 @@
 # Phase 4 spec: True Cost of Stock and decision rules
 
-Source: build-guide.md, Phase 4, made exact by the pitch-deck prototype (src/data/demo-data.json).
+Source: build-guide.md, Phase 4, made exact by the pitch-deck prototype (its numbers are kept in ml/tests/fixtures/deck_examples.json).
 All 10 prototype products are reproduced exactly by ml/tests/test_decisions.py.
 Code: ml/retailiq_ml/decisions/ (pure Python: no Modal, no database).
 

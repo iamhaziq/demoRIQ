@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { showValue } from '../format'
 
-export default function DecisionCard({ card, status, onApprove, onDismiss, onUndo }) {
+export default function DecisionCard({ card, status, onApprove, onDismiss, onWrong, onUndo }) {
   const [showDraft, setShowDraft] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  if (status === 'dismissed') {
+  if (status === 'dismissed' || status === 'wrong') {
     return (
       <div className="dismissed">
-        <span>Dismissed: {card.title}</span>
+        <span>
+          {status === 'wrong' ? 'Marked as wrong (thank you, we will review it)' : 'Dismissed'}: {card.title}
+        </span>
         <button onClick={onUndo}>Undo</button>
       </div>
     )
@@ -69,7 +71,14 @@ export default function DecisionCard({ card, status, onApprove, onDismiss, onUnd
           </div>
         </div>
       )}
-      <p className="src">Numbers from: {card.sources.join(', ')}</p>
+      <p className="src">
+        Numbers from: {card.sources.join(', ')}
+        {onWrong && !approved && (
+          <button className="wrong-link" onClick={onWrong}>
+            Wrong?
+          </button>
+        )}
+      </p>
     </article>
   )
 }

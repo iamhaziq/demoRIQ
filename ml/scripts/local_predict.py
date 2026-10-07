@@ -71,9 +71,18 @@ def main() -> None:
         assert count(conn, "select count(*) from public.decisions where shop_id = %s and superseded_at is null",
                      shop_id) == r2["decisions"]
 
+        n_products = count(conn, "select count(*) from public.products where shop_id = %s", shop_id)
+        assert count(conn, "select count(*) from public.product_metrics where shop_id = %s", shop_id) == n_products
+        assert count(conn, "select count(*) from public.forecast_daily where shop_id = %s", shop_id) == 28 * n_products
+        with psycopg.connect(ADMIN_DSN) as admin:  # the app reads this view; ml_worker has no access
+            kpi = admin.execute("select stock_value, carrying_cost_per_month, cash_trapped, slow_products"
+                                " from public.shop_kpis where shop_id = %s", (shop_id,)).fetchone()
+        print("shop_kpis:", kpi)
+        assert kpi[0] > 0 and kpi[3] >= 1
+
         reason = conn.execute("select reason_json from public.decisions where shop_id = %s and type = 'REORDER'"
                               " and superseded_at is null limit 1", (shop_id,)).fetchone()[0]
-        assert {"product", "as_of", "forecast", "true_cost", "reorder"} <= set(reason)
+        assert {"product", "as_of", "confidence", "forecast", "true_cost", "reorder"} <= set(reason)
 
         # Score the week of 10-05 as if today were 10-13 (no actual sales exist that week -> wape vs 0 sold).
         s = score_last_week(conn, shop_id, today=week + timedelta(days=8))

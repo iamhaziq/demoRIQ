@@ -4,10 +4,10 @@ Source: build-guide.md, Phase 2.
 
 ## Flow
 1. Frontend uploads the original file to `raw-uploads/<shop_id>/<uuid>-<filename>` and inserts an `uploads` row (kind `sales` or `stock`).
-2. Frontend parses the file in the browser (SheetJS), shows 20 rows, auto-guesses columns with `guessColumns()` from `supabase/functions/_shared/columns.ts` (shared with the Edge Function), and the owner confirms.
+2. Frontend parses the file in the browser (SheetJS 0.20.3, loaded only on the Upload screen) with `readSheet()` from `supabase/functions/_shared/sheet.ts`, shows 20 rows, auto-guesses columns with `guessColumns()` from `_shared/columns.ts`, and the owner confirms. Both files are shared with the Edge Function, so the browser and ingest find the same header row and names.
 3. Frontend calls `functions.invoke('ingest', { body: { upload_id, column_map } })`.
 4. `ingest` (user's JWT, so RLS applies): reads the file from Storage, applies the map and the cleaning rules, then calls `ingest_commit()` which writes products/sales/stock in one transaction, then `shop_data_health()`. Results are saved on the `uploads` row and returned.
-5. (Phase 7) on success, call `trigger-ml`.
+5. (Phase 7) on success, ingest calls `trigger-ml`. The Upload screen follows the shop's `ml_jobs` rows live (Realtime; `ml_jobs` is in the `supabase_realtime` publication and RLS limits events to the owner's shop).
 
 ## Column map
 `{ "<field>": "<header in the file>" }`.
