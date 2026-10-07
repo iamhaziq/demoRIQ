@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { supabase } from './supabase'
 
 /** The signed-in session: undefined while loading, null when signed out. */
@@ -31,5 +31,7 @@ export function useShop(session) {
       alive = false
     }
   }, [session])
-  return state
+  /** Merge saved changes (name, language) without reloading. */
+  const update = useCallback((patch) => setState((s) => ({ ...s, shop: s.shop && { ...s.shop, ...patch } })), [])
+  return { ...state, update }
 }

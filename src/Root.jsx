@@ -16,7 +16,7 @@ function Message({ title, children }) {
 }
 
 function Signed({ session }) {
-  const { shop, loading, error } = useShop(session)
+  const { shop, loading, error, update } = useShop(session)
   if (loading) return <Message title="Loading your shop…" />
   if (error || !shop) {
     return (
@@ -28,7 +28,7 @@ function Signed({ session }) {
       </Message>
     )
   }
-  return <App shop={shop} onSignOut={() => supabase.auth.signOut()} />
+  return <App shop={shop} onShopChange={update} onSignOut={() => supabase.auth.signOut()} />
 }
 
 function Gate() {

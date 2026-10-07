@@ -35,6 +35,7 @@ Decision tool for Malaysian grocery/sundry shops. Build plan: docs/build-guide.m
 - Today screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/today_e2e.ts <shop_id>
 - Forecast screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/forecast_e2e.ts <shop_id>
 - Stock Cost screen e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/stock_cost_e2e.ts <shop_id>
+- Settings e2e (after local_predict.py): deno run -A --config supabase/functions/deno.json supabase/tests/settings_e2e.ts <shop_id>
 - Upload e2e (local stack + functions; checks Realtime job status): deno run -A --config supabase/functions/deno.json supabase/tests/upload_e2e.ts
 - Ask box e2e (after local_predict.py, functions running): deno run -A --config supabase/functions/deno.json supabase/tests/ask_e2e.ts <shop_id>
 - Frontend local: .env.local points at the local stack; magic-link emails in Mailpit http://127.0.0.1:54324

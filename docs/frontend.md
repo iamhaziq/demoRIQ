@@ -26,7 +26,8 @@ The deck numbers it held are kept for tests in `ml/tests/fixtures/deck_examples.
 ## Screens the guide needs that do not exist yet
 Login (magic link / phone OTP), Upload + column mapping (+ templates in `public/templates/`), Data health card
 (`uploads.health_json`), "Preparing your forecasts" (`ml_jobs` via Realtime): done in step 6 (`src/screens/Upload.jsx`, `src/lib/upload.js`), Settings (shop rates, product lead
-times / pack size / holding days, agent log consent).
+times / pack size / holding days, agent log consent): done in step 7 (`src/screens/Settings.jsx`, `src/lib/settings.js`;
+saved values apply from the next run, or at once with "Recalculate now" → `trigger-ml`).
 
 ## Backend additions needed first (written by Modal, so the UI never calculates)
 - **A. `product_metrics`** table, one row per product per prediction run (current rows only): on hand, stock value,
