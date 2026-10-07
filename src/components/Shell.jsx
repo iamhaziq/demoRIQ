@@ -2,6 +2,7 @@ const NAV = [
   ['today', 'Today'],
   ['forecast', 'Forecast'],
   ['cost', 'Stock Cost'],
+  ['upload', 'Upload'],
 ]
 
 export function Rail({ view, onView }) {

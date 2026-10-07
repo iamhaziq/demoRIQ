@@ -6,6 +6,7 @@ import AgentOverlay from './components/AgentOverlay'
 import Today from './screens/Today'
 import Forecast from './screens/Forecast'
 import StockCost from './screens/StockCost'
+import Upload from './screens/Upload'
 
 export default function App({ shop, onSignOut }) {
   const [view, setView] = useState('today')
@@ -22,9 +23,10 @@ export default function App({ shop, onSignOut }) {
       <Rail view={view} onView={setView} />
       <TopBar shop={shop} onSignOut={onSignOut} />
       <main className="main">
-        {view === 'today' && <Today shop={shop} />}
+        {view === 'today' && <Today shop={shop} onUpload={() => setView('upload')} />}
         {view === 'forecast' && <Forecast />}
         {view === 'cost' && <StockCost />}
+        {view === 'upload' && <Upload shop={shop} />}
       </main>
       {ask && <AgentOverlay ask={ask} onClose={close} onAsk={askQuestion} />}
       <AskBar value={text} onChange={setText} onSubmit={askQuestion} busy={ask?.phase === 'checking'} />

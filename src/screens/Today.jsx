@@ -22,7 +22,7 @@ function Tiles({ kpis }) {
   )
 }
 
-export default function Today({ shop }) {
+export default function Today({ shop, onUpload }) {
   const { loading, error, kpis, cards, status, feedback, feedbackError, reload } = useToday(shop.id)
 
   if (loading && !kpis && !cards.length) {
@@ -51,6 +51,7 @@ export default function Today({ shop }) {
         <div className="state-box">
           <b>Upload your sales and stock to see this.</b> Once your data is in, RetailIQ forecasts demand overnight and
           shows here what your stock is costing you and what to do about it.
+          <button className="btn primary" onClick={onUpload}>Upload your data</button>
         </div>
       </div>
     )

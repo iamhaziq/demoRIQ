@@ -25,7 +25,7 @@ The deck numbers it held are kept for tests in `ml/tests/fixtures/deck_examples.
 
 ## Screens the guide needs that do not exist yet
 Login (magic link / phone OTP), Upload + column mapping (+ templates in `public/templates/`), Data health card
-(`uploads.health_json`), "Preparing your forecasts" (`ml_jobs` via Realtime), Settings (shop rates, product lead
+(`uploads.health_json`), "Preparing your forecasts" (`ml_jobs` via Realtime): done in step 6 (`src/screens/Upload.jsx`, `src/lib/upload.js`), Settings (shop rates, product lead
 times / pack size / holding days, agent log consent).
 
 ## Backend additions needed first (written by Modal, so the UI never calculates)

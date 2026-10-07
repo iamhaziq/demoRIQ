@@ -37,7 +37,7 @@ jobs:
         working-directory: supabase/functions
         run: deno test --allow-read --allow-import --allow-env
       - name: Frontend unit tests (pure modules in src/lib)
-        run: deno test --config supabase/functions/deno.json src/lib
+        run: deno test --allow-read --config supabase/functions/deno.json src/lib
 
       - uses: supabase/setup-cli@v1
         with:
